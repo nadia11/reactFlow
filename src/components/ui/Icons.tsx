@@ -22,6 +22,7 @@ import {
   SunMedium,
   TabletIcon,
   UserIcon,
+  UsersIcon,
   WebhookIcon,
   XIcon,
   type LucideIcon,
@@ -50,6 +51,7 @@ export const Icons = {
   card:DiamondIcon,
   message: MessageCircleIcon,
   user: UserIcon,
+  users: UsersIcon,
   close: XIcon,
   flag: FlagIcon,
   clock: ClockIcon,
@@ -238,3 +240,17 @@ export const Icons = {
     </svg>
   ),
 };
+export const OperationsIcons = {
+  subscribe: Icons.bell, // BellIcon
+  unsubscribe: Icons.close, // XIcon or similar
+  updateAttribute: Icons.settings, // SettingsIcon
+  setTags: Icons.flag, // FlagIcon
+  assignTeam: Icons.users, // User or a custom group icon can be used
+  assignUser: Icons.user, // UserIcon
+  triggerChatbot: Icons.message, // MessageCircleIcon
+  updateChatStatus: Icons.refresh, // RefreshCwIcon
+  template: Icons.card, // DiamondIcon
+  timeDelay: Icons.clock, // ClockIcon
+};
+
+export default OperationsIcons;

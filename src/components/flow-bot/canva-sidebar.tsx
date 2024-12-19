@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
 import { useNodeStore } from '@/store/node-data';
-
 import { Icons } from '../ui/Icons';
-import { Input } from '../ui/input';
+//import { Input } from '../ui/input';
 import { sidebarNavigation } from '@/configs';
 import { DragEvent } from 'react';
 import { BaseNodeData } from '@/types';
 import { camelCase } from 'lodash';
+import clsx from "clsx";
 
 export const Canvasidebar = () => {
   const { state, dispatch } = useNodeStore();
@@ -40,26 +40,26 @@ export const Canvasidebar = () => {
       </div>
 
       <div className='flex flex-col gap-2 px-4 mt-10'>
-        <h2 className='text-xl text-gray-700'>Type to Search</h2>
+        {/* <h2 className='text-xl text-gray-700'>Type to Search</h2>
         <div className='relative'>
           <Input
             className='w-full p-2 placeholder:text-gray-600 focus:outline-none focus:ring-0 focus:border-none ring-0 focus-visible:ring-0'
             placeholder='Type the name of feature'
           />
           <Icons.search className='absolute top-2 right-2 text-gray-600' />
-        </div>
+        </div> */}
 
-        <div className='flex flex-col gap-4 items-start justify-start  mt-3 h-[270px] overflow-y-auto'>
+        <div className='flex flex-col gap-4 items-start justify-start h-[80vh] overflow-y-auto'>
           {sidebarNavigation.map((item, index) => (
             <div key={index} className='w-full'>
               <h3 className='text-lg text-gray-600 font-bold'>{item.label}</h3>
-              <div className='grid grid-cols-3 gap-2 w-full'>
+              <div className={`grid ${item.className} w-full`}>
                 {item.children.map((item, index) => {
                   const Icon = Icons[item.icon ?? 'chevronLeft'];
                   return (
                     <div
                       key={index}
-                      className='mt-1 px-2 py-3  flex flex-col items-center justify-between bg-white hover:bg-gray-400 gap-4 w-full hover:shadow-md transition-all duration-300 cursor-grab'
+                      className={`mt-1 px-2 py-3  flex flex-col items-center justify-between ${item.bgColor} rounded-2xl hover:bg-gray-400 gap-4 w-full hover:shadow-md transition-all duration-300 cursor-grab`}
                       draggable
                       onDragStart={event =>
                         onDragStart(event, {
@@ -69,16 +69,22 @@ export const Canvasidebar = () => {
                         })
                       }
                     >
-                      <div className=' flex flex-col items-center gap-1 w-full'>
-                        <div className={cn('px-1.5 py-1 rounded-md border')}>
-                          <Icon className='text-gray-500 size-4' />
+                      <div className={clsx(  
+    "flex justify-between items-center gap-1 w-full", // Common classes
+    item.type === "icon" ? "flex-col bg-red-500" : "flex-row p-2" // Conditional layout
+  )}>
+                      <div className='flex flex-col'>
+                        <h6 className={`text-${item.textColor} text-lg font-bold`}>{item.label}</h6>
+                        <h6 className={`text-${item.textColor} text-lg`}>{item.description}</h6>
                         </div>
-                        <h6 className='text-gray-600 text-lg'>{item.label}</h6>
+                        <div className={cn('p-2 rounded-full bg-white opacity-25')}>
+                          <Icon className={`${item.logoColor}  opacity-100 size-5`} strokeWidth={9}/>
+                        </div>
                       </div>
                     </div>
                   );
                 })}
-              </div>
+              </div>  
             </div>
           ))}
         </div>

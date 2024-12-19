@@ -3,6 +3,10 @@ export * from './node'
 
 export interface NavItem {
     title?: string;
+    bgColor?:string;
+    logoColor?:string;
+    textColor?:string;
+    type?: "card" | "icon";
     href?: string;
     id?:string
     component?:any,
@@ -35,6 +39,7 @@ export interface NavItem {
     label: string;
     type: string;
     children: NavItem[];
+    className: string;
   }
 
   export interface NodeData {
