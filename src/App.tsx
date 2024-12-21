@@ -18,7 +18,7 @@ import { FlowBotHeader } from './components/flow-bot/flow-bot-header';
 import  CustomConnectionLine from './components/flow-bot/connection-line';
 import { useGlobalStore } from './store';
 import FlowChat from './components/flow-bot/flow-chat';
-
+import Layout from './components/layout';
 const proOptions = { hideAttribution: true };
 const defaultEdgeOptions = {
   type: 'smoothstep',
@@ -54,6 +54,7 @@ function App() {
 
    const {state:globalState}=useGlobalStore()
   return (
+    <Layout>
     <div className='h-screen overflow-hidden relative'>
     {globalState.bubble_open && (
       <BubbleChatBox>
@@ -122,6 +123,7 @@ function App() {
       </div>
     </div>
     </div>
+    </Layout>
   );
 }
 

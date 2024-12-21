@@ -28,11 +28,11 @@ export const Canvasidebar = () => {
   return (
     <div
       className={cn(
-        "bg-[#eef0f7] border rounded-md transition-['width'] duration-300 h-screen flex flex-col pb-6  z-30",
-        state.sidebarOpen ? "w-[500px] opacity-100" : "w-0 hidden"
+        "bg-[#eef0f7] border rounded-md transition-['width'] duration-300 h-screen flex flex-col pb-6 z-30",
+        state.sidebarOpen ? "w-[20%] opacity-100" : "w-0 hidden"
       )}
     >
-      <div className="flex justify-between items-center px-4 py-4 border-b-2 w-full">
+      <div className="flex justify-between items-center pr-4 py-4 border-b-2 w-full">
         
         {showQuestionOptions &&
           <button onClick={()=>{setShowQuestionOptions(false)}} className="flex flex-row">
@@ -45,10 +45,10 @@ export const Canvasidebar = () => {
         </button>
       </div>
 
-      <div className="flex flex-col gap-2 px-4 mt-10">
+      <div className="flex flex-col gap-2 px-1 my-5">
         <div className="flex flex-col gap-4 items-start justify-start h-[80vh] overflow-y-auto">
           {(showQuestionOptions ? sidebarNavigationAlternatives : sidebarNavigation).map((item, index) => (
-            <div key={index} className="w-full">
+            <div key={index} className="w-full px-3">
               <h3 className="text-lg text-gray-600 font-bold">{item.label}</h3>
               <div className={`grid ${item.className} w-full`}>
                 {item.children.map((item, index) => {
@@ -56,7 +56,7 @@ export const Canvasidebar = () => {
                   return (
                     <div
                       key={index}
-                      className={`mt-1 px-2 py-3  flex flex-col items-center justify-between ${item.bgColor} rounded-2xl hover:bg-gray-400 gap-4 w-full hover:shadow-md transition-all duration-300 cursor-grab`}
+                      className={`mt-1 px-3 py-3  flex flex-col items-center justify-between ${item.bgColor} rounded-xl hover:bg-gray-400 w-full hover:shadow-md transition-all duration-300 cursor-grab`}
                       draggable
                       onDragStart={(event) =>
                         onDragStart(event, {
@@ -72,20 +72,17 @@ export const Canvasidebar = () => {
                     >
                       <div
                         className={clsx(
-                          "flex justify-between items-center gap-1 w-full", // Common classes
+                          "flex justify-between items-start gap-1 w-full", // Common classes
                           item.type === "icon"
                             ? "flex-col bg-red-500"
-                            : "flex-row p-2" // Conditional layout
+                            : "flex-row" // Conditional layout
                         )}
                       >
                         <div className="flex flex-col">
                           <h6
-                            className={`text-${item.textColor} text-lg font-bold`}
+                            className={`text-${item.textColor} text-md font-bold`}
                           >
                             {item.label}
-                          </h6>
-                          <h6 className={`text-${item.textColor} text-lg`}>
-                            {item.description}
                           </h6>
                         </div>
                         <div
@@ -97,6 +94,10 @@ export const Canvasidebar = () => {
                           />
                         </div>
                       </div>
+                      
+                      <h6 className={`text-${item.textColor} text-sm`}>
+                            {item.description}
+                          </h6>
                     </div>
                   );
                 })}
