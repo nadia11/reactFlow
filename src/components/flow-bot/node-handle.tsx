@@ -2,11 +2,11 @@ import { ISelectNode, NodeType } from '@/types';
 import { memo, useState } from 'react';
 import { Handle, Position, useNodeId } from 'reactflow';
 import { HandleClickMenu } from './handle-cllick-menu';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
-import { sidebarNavigation } from '@/configs';
+import { sidebarNavigation } from '@/configs/sideNavOptions';
 import { useFlow } from '@/hooks/useFlow';
 
 type NodeHandleProps = {

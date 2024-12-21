@@ -1,4 +1,4 @@
-import { Icons } from '@/components/ui/Icons';
+import { Icons } from '@/assets/Icons';
 import { Input } from '@/components/ui/input';
 import Loader from '@/components/ui/loader';
 import { cn } from '@/lib/utils';

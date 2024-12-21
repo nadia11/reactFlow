@@ -17,7 +17,7 @@ import { Input } from '../ui/input';
 import React, { useEffect } from 'react';
 import { Textarea } from '../ui/textarea';
 import ImageUpload from './image-upload';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 
 const CardForm = () => {
   const { updateNodeData } = useNodeDataChange();

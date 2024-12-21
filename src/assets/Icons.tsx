@@ -1,5 +1,6 @@
 import {
   ArrowUp,
+  ArrowLeft,
   BellIcon,
   CheckCircle2,
   ChevronRight,
@@ -58,6 +59,7 @@ export const Icons = {
   trash: TrashIcon,
   plus: PlusIcon,
   condition: Move3DIcon,
+  arrowLeft: ArrowLeft,
   chevronRight: ChevronRight,
   download: DownloadIcon,
   checkCircle: CheckCircle2,

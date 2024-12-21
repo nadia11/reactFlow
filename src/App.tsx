@@ -11,7 +11,7 @@ import { cn } from './lib/utils';
 import { useFlow } from './hooks/useFlow';
 import 'reactflow/dist/style.css';
 import { BubbleChatBox, Canvasidebar } from './components/flow-bot';
-import { Icons } from './components/ui/Icons';
+import { Icons } from './assets/Icons';
 import { useNodeStore } from './store/node-data';
 import Sidebar from './components/flow-bot/sidebar';
 import { FlowBotHeader } from './components/flow-bot/flow-bot-header';

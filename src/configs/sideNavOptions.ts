@@ -108,6 +108,46 @@ export const sidebarNavigation: ISidebarNavigation[] = [
   },
 ];
 
+export const sidebarNavigationAlternatives: ISidebarNavigation[] = [
+  {
+    label: '',
+    type: 'action',
+    className: "grid-rows-3 gap-2",
+    children: [
+      {
+        label: 'Questions',
+        icon: 'message',
+        description: 'Ask anything to the user',
+        bgColor: messageCardColor,
+        logoColor: "text-blue-500",
+        textColor: "white",
+        type: "card"
+        
+      },
+
+      {
+        label: 'Buttons',
+        icon: 'button',
+        description: 'Choices based on buttons (Maximum of 3 choices)',
+        bgColor: questionCardColor,
+        logoColor: "white",
+        textColor: "white",
+        type: "card"
+      },
+      {
+        label: 'Lists',
+        icon: 'card',
+        description: 'Choices based on buttons (Maximum of 10 choices)',
+        bgColor: conditionCardColor,
+        logoColor: "white",
+        textColor: "white",
+        type: "card"
+      },
+    ],
+  },
+];
+
+
 export const generatedNodeTypes: NodeTypes = Object.assign(
   {},
   ...flatMap(sidebarNavigation, item =>

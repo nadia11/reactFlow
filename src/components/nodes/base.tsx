@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from 'react';
 import { Card, CardContent } from '../ui/card';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 import { ISelectNode } from '@/types';
 import { useNodeStore } from '@/store/node-data';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';

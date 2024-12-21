@@ -10,7 +10,7 @@ import {
   FormItem,
   FormMessage,
 } from '../ui/form';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { MessageType } from '@/types';

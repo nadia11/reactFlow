@@ -1,4 +1,4 @@
-import {type Icons } from "@/components/ui/Icons";
+import {type Icons } from "@/assets/Icons";
 export * from './node'
 
 export interface NavItem {

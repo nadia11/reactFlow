@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { useNodeStore } from '@/store/node-data';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 import { RenderSwitch } from './renderSwitch';
 
 const Sidebar = () => {

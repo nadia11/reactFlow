@@ -1,6 +1,6 @@
 import { Node } from "reactflow";
 import { BaseNodeData } from ".";
-import { Icons } from "@/components/ui/Icons";
+import { Icons } from "@/assets/Icons";
 
 export enum MessageType{
   TEXT="text",

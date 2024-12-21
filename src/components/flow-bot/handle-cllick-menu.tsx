@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
-import { Icons } from '../ui/Icons';
+import { Icons } from '../../assets/Icons';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Input } from '../ui/input';
-import { sidebarNavigation } from '@/configs';
+import { sidebarNavigation } from '@/configs/sideNavOptions';
 import { useFlow } from '@/hooks/useFlow';
 import { useNodeId } from 'reactflow';
 
