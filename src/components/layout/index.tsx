@@ -1,23 +1,28 @@
 import Header from './header';
 import Sidebar from './sidebar';
+import { useState } from 'react';
 type LayoutProps = {
     children: React.ReactNode; // Accepts any valid React children
   };
-  console.log("Layout rendered");
  const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev:boolean) => !prev);
+  };
   return (
     <div className="w-full bg-white">
-      {/* Header */}
-      <Header />
+          {/* Sidebar */}
+          <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
-      {/* Layout Body */}
-      <div className="relative flex h-[calc(100vh-64px)]">
-        {/* Sidebar */}
-        <Sidebar />
+{/* Main Content */}
+<div className="h-screen overflow-hidden relative">
+  <Header onMenuClick={toggleSidebar} />
 
-        {/* Main Content */}
-        <div className="h-full w-full ml-64">{children}</div>
-      </div>
+  <div className="relative flex h-[calc(100vh-64px)]">
+{children}
+  </div>
+</div>
     </div>
   );
 };

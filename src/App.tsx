@@ -55,14 +55,14 @@ function App() {
    const {state:globalState}=useGlobalStore()
   return (
     <Layout>
-    <div className='h-screen overflow-hidden relative'>
+    <div className='h-screen overflow-hidden relative w-full'>
     {globalState.bubble_open && (
       <BubbleChatBox>
         <FlowChat/>
       </BubbleChatBox>
     )}
     
-    <div className='w-full bg-white  '>
+    <div className='w-full bg-white'>
        
       <FlowBotHeader/>
       <div className='relative flex h-[calc(100vh-64px)] '>

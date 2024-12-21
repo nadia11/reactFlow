@@ -18,7 +18,7 @@ export const BaseLayout = ({ children, node }: BaseLayoutProps) => {
   const { dispatch, state } = useNodeStore();
 
   const [isOpen, setIsOpen] = useState(false);
-  console.log({ type: node });
+  //console.log({ type: node });
   const handleToggleDrawer = () => {
     if (node.data) {
       dispatch({ type: 'SET_SELECTED_NODE', payload: null });
