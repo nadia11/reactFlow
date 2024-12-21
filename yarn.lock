@@ -952,6 +952,7 @@ chalk@^4.0.0:
     react-dom "^18.3.1"
     react-dropzone "^14.2.3"
     react-hook-form "^7.52.0"
+    react-router-dom "^7.1.0"
     reactflow "^11.11.4"
     tailwind-merge "^2.3.0"
     tailwindcss-animate "^1.0.7"
