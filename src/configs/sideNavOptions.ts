@@ -9,7 +9,8 @@ export const sidebarNavigation: ISidebarNavigation[] = [
     className: "grid-rows-3 gap-2",
     children: [
       {
-        label: 'Send a message',
+        label:"card",
+        title: 'Send a message',
         icon: 'message',
         description: 'With no response required from visitor',
         bgColor: messageCardColor,
@@ -20,7 +21,8 @@ export const sidebarNavigation: ISidebarNavigation[] = [
       },
 
       {
-        label: 'Ask a question',
+        label:"buttons",
+        title: 'Ask a question',
         icon: 'button',
         description: 'Ask question and store user input in variable',
         bgColor: questionCardColor,
@@ -29,7 +31,8 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         type: "card"
       },
       {
-        label: 'Set a condition',
+        label:'message',
+        title: 'Set a condition',
         icon: 'card',
         description: 'Send message(s) based on logical condition(s)',
         bgColor: conditionCardColor,

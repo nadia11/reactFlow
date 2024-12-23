@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Modal from '../components/ui/modal'; // Import the Modal component
+import Modal from '../../components/ui/modal'; // Import the Modal component
 import * as Dialog from '@radix-ui/react-dialog';
 import { myBotsData } from '@/MocData/myBots';
-import  Pagination from '../components/ui/pagination';
+import  Pagination from '../../components/ui/pagination';
 import { Icons } from '@/assets/Icons';
 
 const MyBots: React.FC = () => {
