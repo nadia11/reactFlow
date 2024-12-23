@@ -7,17 +7,17 @@ import ReactFlow, {
   useNodesState,
     MiniMap
 } from 'reactflow';
-import { cn } from '../../lib/utils';
-import { useFlow } from '../../hooks/useFlow';
+import { cn } from '../lib/utils';
+import { useFlow } from '../hooks/useFlow';
 import 'reactflow/dist/style.css';
-import { BubbleChatBox, Canvasidebar } from '../../components/flow-bot';
-import { Icons } from '../../assets/Icons';
-import { useNodeStore } from '../../store/node-data';
-import Sidebar from '../../components/flow-bot/sidebar';
-import { FlowBotHeader } from '../../components/flow-bot/flow-bot-header';
-import  CustomConnectionLine from '../../components/flow-bot/connection-line';
-import { useGlobalStore } from '../../store';
-import FlowChat from '../../components/flow-bot/flow-chat';
+import { BubbleChatBox, Canvasidebar } from '../components/flow-bot';
+import { Icons } from '../assets/Icons';
+import { useNodeStore } from '../store/node-data';
+import Sidebar from '../components/flow-bot/sidebar';
+import { FlowBotHeader } from '../components/flow-bot/flow-bot-header';
+import  CustomConnectionLine from '../components/flow-bot/connection-line';
+import { useGlobalStore } from '../store';
+import FlowChat from '../components/flow-bot/flow-chat';
 const proOptions = { hideAttribution: true };
 const defaultEdgeOptions = {
   type: 'smoothstep',

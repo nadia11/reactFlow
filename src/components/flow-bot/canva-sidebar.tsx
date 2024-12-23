@@ -82,7 +82,7 @@ export const Canvasidebar = () => {
                           <h6
                             className={`text-${item.textColor} text-md font-bold`}
                           >
-                            {item.title}
+                            {item.label}
                           </h6>
                         </div>
                         <div

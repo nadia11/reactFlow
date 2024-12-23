@@ -58,9 +58,9 @@ export enum NodeType {
   EMPTY="empty",
   SMS = "sms",
   // PUSH = "push",
-  CARD="Send a message",
-  BUTTONS = "Ask a question",
-  CONDITION = "Set a condition"
+  MESSAGE="message",
+  BUTTONS = "buttons",
+  CARD= "card",
  
 
 }
