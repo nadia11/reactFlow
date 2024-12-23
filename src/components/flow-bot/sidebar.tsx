@@ -14,12 +14,12 @@ const Sidebar = () => {
   const Icon = Icons[node?.data.icon as keyof typeof Icons];
   return (
     <div
-      className={cn(
-        "bg-background border rounded-md transition-['width'] duration-300 h-[calc(100vh-64px)] flex flex-col pb-6 absolute right-0 top-0 ",
-        state.drawerOpen ? 'w-[500px] opacity-100' : 'w-0 hidden'
-      )}
+      // className={cn(
+      //   "bg-background border rounded-md transition-['width'] duration-300 h-[calc(100vh-64px)] flex flex-col pb-6 absolute right-0 top-0 ",
+      //   state.drawerOpen ? 'w-[500px] opacity-100' : 'w-0 hidden'
+      // )}
     >
-      <div className='flex justify-between items-center px-4 py-4 border-b-2 w-full'>
+      {/* <div className='flex justify-between items-center px-4 py-4 border-b-2 w-full'>
         <div className='flex items-center gap-3'>
           {node?.data.icon && <Icon className='size-6' />}
           <h2 className='text-lg text-black font-bold'>{node?.data?.label}</h2>
@@ -27,7 +27,7 @@ const Sidebar = () => {
         <button onClick={handleToggleDrawer}>
           <Icons.close className='start-7' />
         </button>
-      </div>
+      </div> */}
       <RenderSwitch />
     </div>
   );

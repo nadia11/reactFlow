@@ -31,16 +31,16 @@ export const FlowBotHeader = () => {
   return (
     <div className='flex  justify-between items-center bg-white px-40  py-3 shadow-md'>
       <h1 className='text-xl font-semibold text-gray-900'>New Bot</h1>
-        <Button
+        {/* <Button
             variant={'outline'}
             className='border-sky-600 hover:bg-sky-200 border focus:outline-none '
             onClick={onDeleteDataClick}
         >
             Delete previous data
-        </Button>
+        </Button> */}
         <Button
             variant={'outline'}
-            className='border-sky-600 hover:bg-sky-200 border focus:outline-none '
+            className='bg-green-400 text-white hover:bg-sky-200 border focus:outline-none '
             onClick={onTestBotClick}
         >
             Test this bot
