@@ -34,6 +34,10 @@ import {
   TrashIcon,
   FlagIcon,
   DiamondIcon,
+  CopyIcon,
+  DeleteIcon,
+  EditIcon,
+  Trash2Icon
 } from 'lucide-react';
 
 export type ILucideIcon = LucideIcon | any;
@@ -54,6 +58,9 @@ export const Icons = {
   user: UserIcon,
   users: UsersIcon,
   close: XIcon,
+  copy:CopyIcon,
+  delete: DeleteIcon,
+  edit:EditIcon,
   flag: FlagIcon,
   clock: ClockIcon,
   trash: TrashIcon,
