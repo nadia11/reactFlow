@@ -46,15 +46,15 @@ const ReplyActionPage: React.FC<{ onSave?: () => void; onBack?: () => void }> = 
   return (
     <div className="overflow-y-auto w-full">
       {/* Back Button */}
-      <button
+     {onBack && <button
         onClick={onBack}
         className="text-gray-600 hover:text-green-500 flex items-center mb-6"
       >
         ← Back
       </button>
-
+}
       {/* Step Indicator */}
-      <div className="flex items-center space-x-4 mb-6">
+      {(onSave|| onBack) &&  <div className="flex items-center space-x-4 mb-6">
         <div className="flex items-center">
           <div className="h-10 w-10 flex items-center justify-center bg-green-500 text-white rounded-full">
             <Icons.checkCircle/>
@@ -68,7 +68,7 @@ const ReplyActionPage: React.FC<{ onSave?: () => void; onBack?: () => void }> = 
           </div>
           <span className="ml-2 text-gray-700">Reply Action</span>
         </div>
-      </div>
+      </div>}
 
       {/* Material Selection */}
       <div className="flex flex-col md:flex-row">
