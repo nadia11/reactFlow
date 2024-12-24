@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import * as Slider from "@radix-ui/react-slider";
 import Modal from "../ui/modal"; // Import your custom modal component
 import { Icons } from "@/assets/Icons";
-const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+const AddKeywordActionForm: React.FC<{
+  onBack: () => void;
+  onNextStep: () => void;
+}> = ({ onBack, onNextStep }) => {
   const [keywords, setKeywords] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newKeyword, setNewKeyword] = useState("");
-  const [matchingMethod, setMatchingMethod] = useState<string>("Fuzzy matching");
+  const [matchingMethod, setMatchingMethod] =
+    useState<string>("Fuzzy matching");
   const [fuzzyMatchPercentage, setFuzzyMatchPercentage] = useState<number>(80);
 
   // Add new keyword
@@ -34,7 +38,7 @@ const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         onClick={onBack}
         className="text-gray-600 hover:text-green-500 flex items-center mb-6 gap-2"
       >
-        <Icons.arrowLeft/>  <span>Back</span>
+        <Icons.arrowLeft /> <span>Back</span>
       </button>
 
       {/* Step Indicator */}
@@ -131,7 +135,10 @@ const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-4">
-        <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition">
+        <button
+          className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition"
+          onClick={onNextStep}
+        >
           Next step
         </button>
         <button className="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400 transition">

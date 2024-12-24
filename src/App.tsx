@@ -7,8 +7,11 @@ import Login from './pages/chatBot/login';
 import MyBots from './pages/chatBot/myBots';
 import KeywordAction from './pages/chatBot/keywordAction';
 import UnderConstruction from './pages/shared/underConstruction';
+import { Toaster } from 'react-hot-toast';
 function App() {
   return (
+    <>
+     <Toaster position="top-right" reverseOrder={false} />
     <Layout>
       <Routes>
         <Route path="/" element={<ChatFlow />} /> {/* Main Dashboard */}
@@ -19,6 +22,7 @@ function App() {
         <Route path="*" element={<UnderConstruction />} />
       </Routes>
     </Layout>
+    </>
   );
 }
 
