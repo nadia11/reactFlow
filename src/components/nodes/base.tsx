@@ -42,8 +42,8 @@ export const BaseLayout = ({ children, node }: BaseLayoutProps) => {
 
   return (
     <Card
-      className={`flex flex-col    rounded-md shadow-md bg-white min-w-64 max-w-72  relative hover:ring-4
-     hover:ring-sky-500 ${selected && 'ring-4 ring-sky-500'}`}
+      className={`flex flex-col    rounded-md shadow-md bg-white min-w-64 max-w-72  relative hover:ring-2
+     hover:ring-slate-300 ${selected && 'ring-2 ring-green-500'}`}
       onClick={handleToggleDrawer}
     >
       <CardContent className='pb-0 px-0'>

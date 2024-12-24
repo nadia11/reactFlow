@@ -8,8 +8,8 @@ interface HeaderProps {
   
   const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     const menuItems = [
-      { label: 'Default Action', route: '/menu1' },
-      { label: 'Keyword Action', route: '/menu2' },
+      { label: 'Default Action', route: '/defaultActions' },
+      { label: 'Keyword Action', route: '/keywordActions' },
       { label: 'Reply Material', route: '/menu3' },
       { label: 'Rules', route: '/menu4' },
       { label: 'WhatsApp Flows', route: '/menu5' },

@@ -5,6 +5,7 @@ import { ChatFlow} from './pages/chatBot/chatFlow';
 import DefaultActions from './pages/chatBot/defaultAction';
 import Login from './pages/chatBot/login';
 import MyBots from './pages/chatBot/myBots';
+import KeywordAction from './pages/chatBot/keywordAction';
 import UnderConstruction from './pages/shared/underConstruction';
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<ChatFlow />} /> {/* Main Dashboard */}
         <Route path="/login" element={<Login/>} /> {/* Login Page */}
         <Route path="/myBots" element={<MyBots/>} />  {/* MyBots Page */}
-        <Route path="/defaultActions" element={<DefaultActions/>} />  {/* MyBots Page */}
+        <Route path="/defaultActions" element={<DefaultActions/>} />  {/* Default Action Page */}
+        <Route path="/keywordActions" element={<KeywordAction/>} />  {/* Default Action Page */}
         <Route path="*" element={<UnderConstruction />} />
       </Routes>
     </Layout>
