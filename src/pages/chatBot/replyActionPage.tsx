@@ -9,7 +9,7 @@ interface Material {
   content: string;
 }
 
-const ReplyActionPage: React.FC<{ onSave: () => void; onBack: () => void }> = ({
+const ReplyActionPage: React.FC<{ onSave?: () => void; onBack?: () => void }> = ({
   onSave,
   onBack,
 }) => {
@@ -44,7 +44,7 @@ const ReplyActionPage: React.FC<{ onSave: () => void; onBack: () => void }> = ({
   };
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-y-auto w-full">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -86,7 +86,7 @@ const ReplyActionPage: React.FC<{ onSave: () => void; onBack: () => void }> = ({
             Add
           </button>
                 {/* Action Buttons */}
-
+{(onSave|| onBack) && <span className="flex gap-3">
         <button
           onClick={onBack}
           className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400"
@@ -102,7 +102,7 @@ const ReplyActionPage: React.FC<{ onSave: () => void; onBack: () => void }> = ({
         >
           Save
         </button>
- 
+        </span>}
           </div>
           <div className="grid grid-cols-2 gap-4 mt-20">
             {materials.map((material) => (

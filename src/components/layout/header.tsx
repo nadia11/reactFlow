@@ -10,7 +10,7 @@ interface HeaderProps {
     const menuItems = [
       { label: 'Default Action', route: '/defaultActions' },
       { label: 'Keyword Action', route: '/keywordActions' },
-      { label: 'Reply Material', route: '/menu3' },
+      { label: 'Reply Material', route: '/replyActions' },
       { label: 'Rules', route: '/menu4' },
       { label: 'WhatsApp Flows', route: '/menu5' },
     ];
