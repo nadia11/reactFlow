@@ -53,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className={`text-gray-700 ${
             currentPage === 1
               ? 'cursor-not-allowed text-gray-400'
-              : 'hover:text-blue-600'
+              : 'hover:text-green-600'
           }`}
         >
           ← Previous
@@ -64,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className={`text-gray-700 ${
             currentPage === totalPages
               ? 'cursor-not-allowed text-gray-400'
-              : 'hover:text-blue-600'
+              : 'hover:text-green-600'
           }`}
         >
           Next →

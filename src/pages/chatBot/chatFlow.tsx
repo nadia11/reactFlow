@@ -65,7 +65,7 @@ export function ChatFlow(){
       <FlowBotHeader/>
       <div className='relative flex h-[calc(100vh-64px)] '>
         <button
-          className='bg-sky-500 h-14 w-14 rounded-full absolute top-5 left-5 flex justify-center items-center text-white z-20'
+          className='bg-green-500 h-14 w-14 rounded-full absolute top-5 left-5 flex justify-center items-center text-white z-20'
           onClick={handleToggleDrawer}
         >
           <Icons.plus className='size-8' />

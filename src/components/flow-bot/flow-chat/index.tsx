@@ -453,7 +453,7 @@ const FlowChat = () => {
             className={cn(
               'py-3 px-4 rounded-lg',
               message.type === 'user'
-                ? 'self-end bg-blue-500 text-white'
+                ? 'self-end bg-green-500 text-white'
                 : 'self-start bg-white text-gray-900'
             )}
           >
@@ -471,7 +471,7 @@ const FlowChat = () => {
                 className={cn(
                   'max-w-xs py-2 px-5 rounded-lg mb-2',
                   message.type === 'user'
-                    ? 'self-end bg-blue-500 text-white'
+                    ? 'self-end bg-green-500 text-white'
                     : 'self-start bg-white rounded-lg text-gray-900'
                 )}
               >

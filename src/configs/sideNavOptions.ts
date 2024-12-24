@@ -14,7 +14,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         icon: 'message',
         description: 'With no response required from visitor',
         bgColor: messageCardColor,
-        logoColor: "text-blue-500",
+        logoColor: "text-green-500",
         textColor: "white",
         type: "card"
         
@@ -48,49 +48,67 @@ export const sidebarNavigation: ISidebarNavigation[] = [
     className: "grid-cols-2 gap-2",
     children: [
       {
-        label: 'Subscribe',
+        title: 'Subscribe',
+        type: 'icon',
+        label: '',
         icon: 'message',
-        
+        bgColor: "bg-red-300",
       },
-
       {
-        label: 'Unsubscribe',
+        title: 'Unsubscribe',
+        type: 'icon',
+        label: '',
         icon: 'button',
       },
       {
-        label: 'Update Attribute',
+        title: 'Update Attribute',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Set tags',
+        title: 'Set tags',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Assign Team',
+        title: 'Assign Team',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Assign User',
+        title: 'Assign User',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Trigger Chatbot',
+        title: 'Trigger Chatbot',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Update Chat Status',
+        title: 'Update Chat Status',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Template',
+        title: 'Template',
+        type: 'icon',
+        label: '',
         icon: 'card',
       },
       {
-        label: 'Time Delay',
+        title: 'Time Delay',
+        type: 'icon',
+        label: '',
         icon: 'card',
-      }
-      
-    ],
+      },
+    ]  
   },
   {
     label: 'Integrations',
@@ -98,13 +116,17 @@ export const sidebarNavigation: ISidebarNavigation[] = [
     className: "grid-cols-2 gap-2",
     children: [
       {
-        label: 'Webhook',
+        title:"Webhook",
+        type: 'icon',
+        label: '',
         icon: 'message',
         
       },
 
       {
-        label: 'Google Spreadsheet',
+        title:"Google Spreadsheet",
+        type: 'icon',
+        label: '',
         icon: 'button',
       },
     ],
@@ -118,18 +140,20 @@ export const sidebarNavigationAlternatives: ISidebarNavigation[] = [
     className: "grid-rows-3 gap-2",
     children: [
       {
-        label: 'Questions',
+        title:"Questions",
+        label: '',
         icon: 'message',
         description: 'Ask anything to the user',
         bgColor: messageCardColor,
-        logoColor: "text-blue-500",
+        logoColor: "text-green-500",
         textColor: "white",
         type: "card"
         
       },
 
       {
-        label: 'Buttons',
+        title: 'Buttons',
+        label:"",
         icon: 'button',
         description: 'Choices based on buttons (Maximum of 3 choices)',
         bgColor: questionCardColor,
@@ -138,7 +162,8 @@ export const sidebarNavigationAlternatives: ISidebarNavigation[] = [
         type: "card"
       },
       {
-        label: 'Lists',
+        title: 'Lists',
+        label:"",
         icon: 'card',
         description: 'Choices based on buttons (Maximum of 10 choices)',
         bgColor: conditionCardColor,

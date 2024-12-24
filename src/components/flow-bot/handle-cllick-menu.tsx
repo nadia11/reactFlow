@@ -33,7 +33,7 @@ export const HandleClickMenu = ({
       }}>
         <PopoverTrigger asChild className='!z-0'>
           <button
-            className='bg-sky-500 transition flex items-center z-[40] justify-center duration-200 rounded-full text-white w-8 h-8 cursor-pointer'
+            className='bg-green-500 transition flex items-center z-[40] justify-center duration-200 rounded-full text-white w-8 h-8 cursor-pointer'
             onClick={(e) => {
               e.stopPropagation(); // Prevents triggering other click events
             }}

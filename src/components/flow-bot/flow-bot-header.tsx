@@ -40,7 +40,7 @@ export const FlowBotHeader = () => {
         </Button> */}
         <Button
             variant={'outline'}
-            className='bg-green-400 text-white hover:bg-sky-200 border focus:outline-none '
+            className='bg-green-500 text-white hover:bg-sky-200 border focus:outline-none '
             onClick={onTestBotClick}
         >
             Test this bot

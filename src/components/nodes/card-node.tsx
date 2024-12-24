@@ -45,7 +45,7 @@ export const CardNode = (node: ISelectNode) => {
                           <React.Fragment key={idx}>
                             <button
                               key={idx}
-                              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2 w-full relative'
+                              className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2 w-full relative'
                             >
                               {button.name}
                               <NodeSourceHandle

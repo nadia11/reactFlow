@@ -52,7 +52,7 @@ const MyBots: React.FC = () => {
           href="https://www.youtube.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
+          className="text-green-500 hover:underline"
         >
           Watch Tutorial
         </a>
@@ -136,7 +136,7 @@ const MyBots: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
             Add
           </button>

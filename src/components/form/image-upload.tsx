@@ -70,7 +70,7 @@ const ImageUpload = ({ name, value, setValue }: ImageProps) => {
           {value && isDataUrl(value) ? (
             <div className='flex flex-col gap-3 mt-3'>
               <img
-                className='border border-black rounded-md hover:border-blue-500 bg-white max-h-[155px] w-full bg-cover  object-cover'
+                className='border border-black rounded-md hover:border-green-500 bg-white max-h-[155px] w-full bg-cover  object-cover'
                 src={value}
                 
                 height={155}
@@ -92,7 +92,7 @@ const ImageUpload = ({ name, value, setValue }: ImageProps) => {
               style={{
                 height: '155px',
               }}
-              className='flex flex-col justify-center items-center h-[155px] rounded-md bg-gray-100 dark:bg-slate-800 border border-black dark:border-white hover:border-blue-500 relative w-full'
+              className='flex flex-col justify-center items-center h-[155px] rounded-md bg-gray-100 dark:bg-slate-800 border border-black dark:border-white hover:border-green-500 relative w-full'
             >
               <input
                 ref={uploadImageRef}

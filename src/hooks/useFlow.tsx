@@ -64,7 +64,7 @@ export const useFlow = () => {
   }
   const onConnect = useCallback(
     (params: any) => {
-      const newColor = '#7A28FF'; // Ensure the color is set here
+      const newColor = '#b1b1b7'; // Ensure the color is set here
       const type = 'smoothstep';
       const newEdge: Edge = constructEdge(
         nanoid(),
@@ -85,7 +85,7 @@ export const useFlow = () => {
   const addNodeClick = (item: any, currentId: string, handleId?: string) => {
     const filteredNode: any = nodes.find(node => node.id === currentId);
     const newNodeId = nanoid();
-    let newColor = '#7A28FF';
+    let newColor = '#b1b1b7';
     const newNode: any = {
       id: newNodeId,
       data: { label: item.label, icon: item.icon },

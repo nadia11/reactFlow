@@ -12,7 +12,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 w-full">
+    <div className="flex items-center justify-center bg-gray-100 w-full">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"
@@ -48,7 +48,7 @@ const Login: React.FC = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full my-3 bg-green-500 text-white p-2 rounded hover:bg-green-400"
         >
           Login
         </button>

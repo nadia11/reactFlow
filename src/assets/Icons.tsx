@@ -4,6 +4,7 @@ import {
   BellIcon,
   CheckCircle2,
   ChevronRight,
+  ChevronDown,
   ChevronUp,
   ChevronsRight,
   ClockIcon,
@@ -37,7 +38,6 @@ import {
   CopyIcon,
   DeleteIcon,
   EditIcon,
-  Trash2Icon
 } from 'lucide-react';
 
 export type ILucideIcon = LucideIcon | any;
@@ -47,6 +47,7 @@ export const Icons = {
   moon: Moon,
   spinner: Loader2,
   arrowUp: ArrowUp,
+  arrowDown: ChevronDown,
   search: SearchIcon,
   refresh: RefreshCwIcon,
   menu: MenuIcon,

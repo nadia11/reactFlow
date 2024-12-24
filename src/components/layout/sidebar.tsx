@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       }`}
     >
       {/* Close Button */}
-      <div className="flex items-center justify-between p-4 bg-teal-500 text-white">
+      <div className="flex items-center justify-between p-4 bg-green-500 text-white">
         <span className="font-bold text-lg">Techzilo</span>
         <button
           onClick={onClose}

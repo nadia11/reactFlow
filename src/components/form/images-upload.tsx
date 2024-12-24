@@ -52,7 +52,7 @@ const ImagesUpload = ({ name, value, setValue }: ImageProps) => {
             {image ? (
               <>
                 <img
-                  className='border border-black rounded-md max-w-[150px] w-full hover:border-blue-500 bg-white max-h-[155px] h-full'
+                  className='border border-black rounded-md max-w-[150px] w-full hover:border-green-500 bg-white max-h-[155px] h-full'
                   src={image}
                   height={155}
                   alt=''
@@ -75,8 +75,8 @@ const ImagesUpload = ({ name, value, setValue }: ImageProps) => {
         style={{
           height: '155px',
         }}
-        className={`flex flex-col justify-center items-center h-[155px] rounded-md bg-gray-100 dark:bg-slate-800 border border-black dark:border-white hover:border-blue-500 relative w-full mt-3 ${
-          isDragActive ? 'bg-blue-100' : ''
+        className={`flex flex-col justify-center items-center h-[155px] rounded-md bg-gray-100 dark:bg-slate-800 border border-black dark:border-white hover:border-green-500 relative w-full mt-3 ${
+          isDragActive ? 'bg-green-100' : ''
         }`}
       >
         <input {...getInputProps()} />

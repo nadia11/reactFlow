@@ -54,7 +54,7 @@ export const NodeSourceHandle = memo(
             >
               <PopoverTrigger asChild className='!z-10'>
                 <button
-                  className='bg-purple-500 transition flex items-center z-[999] justify-center duration-200 rounded-full text-white w-7 h-7 cursor-pointer '
+                  className='bg-green-500 transition flex items-center z-[999] justify-center duration-200 rounded-full text-white w-7 h-7 cursor-pointer '
                   onClick={e => {
                     e.stopPropagation(); // Prevents triggering other click events
                     setOpen(!open);

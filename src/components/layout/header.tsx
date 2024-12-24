@@ -1,11 +1,20 @@
 import React from 'react';
 import {  LucideMenu, LucideBell, LucideUsers } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import Menu from '../ui/menu';
 interface HeaderProps {
     onMenuClick: () => void;
   }
   
   const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+    const menuItems = [
+      { label: 'Default Action', route: '/menu1' },
+      { label: 'Keyword Action', route: '/menu2' },
+      { label: 'Reply Material', route: '/menu3' },
+      { label: 'Rules', route: '/menu4' },
+      { label: 'WhatsApp Flows', route: '/menu5' },
+    ];
+    
     const navigate = useNavigate();
     return (
       <header className="w-full bg-white h-16 shadow-md flex items-center px-4 justify-between border-b border-slate-200">
@@ -21,9 +30,9 @@ interface HeaderProps {
         <div className="flex items-center space-x-4">
           <div className="flex items-center text-lg font-semibold text-green-600">
             <span className="bg-green-500 h-8 w-8 rounded-full flex justify-center items-center text-white">
-              Q
+              T
             </span>
-            <span className="ml-2">Wati</span>
+            <span className="ml-2">Techzilo</span>
           </div>
           {/* Navigation Links */}
           <nav className="hidden md:flex space-x-6">
@@ -36,9 +45,11 @@ interface HeaderProps {
             <a href="#contacts" className="text-gray-600 hover:text-gray-900">
               Contacts
             </a>
-            <a href="#automations" className="text-green-600 font-semibold">
-              Automations
-            </a>
+            <div>
+        {/* Automations Dropdown */}
+        <Menu title="Automations" items={menuItems} />
+      </div>
+
             <button className="text-gray-600 hover:text-gray-900" onClick={()=>{navigate("/")}}>
               Chatbots
             </button>

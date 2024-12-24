@@ -1,5 +1,4 @@
-const messageCardColor = "bg-rose-400";
-const questionCardColor = "bg-orange-400";
-const conditionCardColor = "bg-blue-500";
-
+const messageCardColor = "red";
+const questionCardColor = "yellow";
+const conditionCardColor = "green";
 export { messageCardColor, questionCardColor, conditionCardColor };
