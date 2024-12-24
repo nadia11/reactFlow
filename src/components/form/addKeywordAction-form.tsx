@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Slider from "@radix-ui/react-slider";
 import Modal from "../ui/modal"; // Import your custom modal component
-
+import { Icons } from "@/assets/Icons";
 const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [keywords, setKeywords] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,9 +32,9 @@ const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="text-gray-600 hover:text-green-500 flex items-center mb-6"
+        className="text-gray-600 hover:text-green-500 flex items-center mb-6 gap-2"
       >
-        ← Back
+        <Icons.arrowLeft/>  <span>Back</span>
       </button>
 
       {/* Step Indicator */}
