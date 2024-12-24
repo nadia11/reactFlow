@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import * as Slider from "@radix-ui/react-slider";
+import Modal from "../ui/modal"; // Import your custom modal component
 
-export const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [keywords, setKeywords] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newKeyword, setNewKeyword] = useState("");
   const [matchingMethod, setMatchingMethod] = useState<string>("Fuzzy matching");
   const [fuzzyMatchPercentage, setFuzzyMatchPercentage] = useState<number>(80);
 
+  // Add new keyword
   const handleAddKeyword = () => {
-    const newKeyword = prompt("Enter a new keyword:");
-    if (newKeyword) {
-      setKeywords([...keywords, newKeyword]);
+    if (newKeyword.trim()) {
+      setKeywords([...keywords, newKeyword.trim()]);
+      setNewKeyword("");
+      setIsModalOpen(false);
     }
+  };
+
+  // Delete keyword
+  const handleDeleteKeyword = (keyword: string) => {
+    setKeywords(keywords.filter((kw) => kw !== keyword));
   };
 
   const handleSliderChange = (value: number[]) => {
@@ -47,17 +57,23 @@ export const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack 
       {/* Keywords Section */}
       <div className="bg-white p-6 rounded-md shadow mb-6">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Keyword(s):</h2>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           {keywords.map((keyword, index) => (
-            <span
+            <div
               key={index}
-              className="bg-green-100 text-green-600 px-4 py-2 rounded-md"
+              className="flex items-center bg-green-100 text-green-600 px-4 py-2 rounded-md space-x-2"
             >
-              {keyword}
-            </span>
+              <span>{keyword}</span>
+              <button
+                onClick={() => handleDeleteKeyword(keyword)}
+                className="text-red-500 hover:text-red-700"
+              >
+                ×
+              </button>
+            </div>
           ))}
           <button
-            onClick={handleAddKeyword}
+            onClick={() => setIsModalOpen(true)}
             className="border-2 border-dashed border-green-500 text-green-500 px-4 py-2 rounded-md hover:bg-green-50"
           >
             Add Keyword +
@@ -122,6 +138,32 @@ export const AddKeywordActionForm: React.FC<{ onBack: () => void }> = ({ onBack 
           Save changes
         </button>
       </div>
+
+      {/* Add Keyword Modal */}
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <h2 className="text-lg font-bold text-gray-700 mb-4">Add Keyword</h2>
+        <input
+          type="text"
+          value={newKeyword}
+          onChange={(e) => setNewKeyword(e.target.value)}
+          placeholder="Enter keyword"
+          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+        />
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={handleAddKeyword}
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+          >
+            Add
+          </button>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition"
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
