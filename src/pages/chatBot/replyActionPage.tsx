@@ -93,6 +93,7 @@ const ReplyActionPage: React.FC<{ onSave?: () => void; onBack?: () => void }> = 
         >
           Cancel
         </button>
+        {onSave && (
         <button
           onClick={() => {
             toast.success("Reply action saved!");
@@ -101,7 +102,7 @@ const ReplyActionPage: React.FC<{ onSave?: () => void; onBack?: () => void }> = 
           className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
         >
           Save
-        </button>
+        </button>)}
         </span>}
           </div>
           <div className="grid grid-cols-2 gap-4 mt-20">
