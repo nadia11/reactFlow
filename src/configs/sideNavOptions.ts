@@ -1,7 +1,12 @@
 import { ISidebarNavigation } from '@/types';
 import { camelCase, flatMap, pick } from 'lodash';
 import { NodeTypes } from 'reactflow';
-import { messageCardColor, questionCardColor, conditionCardColor } from '@/constants/colors';
+import {   messageCardColor, 
+  messageTextColor, 
+  questionCardColor, 
+  questionTextColor, 
+  conditionCardColor, 
+  conditionTextColor } from '@/constants/colors';
 export const sidebarNavigation: ISidebarNavigation[] = [
   {
     label: '',
@@ -15,7 +20,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         description: 'With no response required from visitor',
         bgColor: messageCardColor,
         logoColor: "text-green-500",
-        textColor: "white",
+        textColor: messageTextColor,
         type: "card"
         
       },
@@ -27,7 +32,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         description: 'Ask question and store user input in variable',
         bgColor: questionCardColor,
         logoColor: "white",
-        textColor: "white",
+        textColor: questionTextColor,
         type: "card"
       },
       {
@@ -37,7 +42,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         description: 'Send message(s) based on logical condition(s)',
         bgColor: conditionCardColor,
         logoColor: "white",
-        textColor: "white",
+        textColor: conditionTextColor,
         type: "card"
       },
     ],
@@ -52,64 +57,73 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         type: 'icon',
         label: 'Subscribe',
         icon: 'message',
-        bgColor: "bg-red-300",
+        bgColor: "bg-red-500", // Red
       },
       {
         title: 'Unsubscribe',
         type: 'icon',
         label: 'Unsubscribe',
         icon: 'button',
+        bgColor: "bg-blue-500", // Blue
       },
       {
         title: 'Update Attribute',
         type: 'icon',
         label: 'Update Attribute',
         icon: 'card',
+        bgColor: "bg-green-500", // Green
       },
       {
         title: 'Set tags',
         type: 'icon',
         label: 'Set tags',
         icon: 'card',
+        bgColor: "bg-yellow-500", // Yellow
       },
       {
         title: 'Assign Team',
         type: 'icon',
         label: 'Assign Team',
         icon: 'card',
+        bgColor: "bg-purple-500", // Purple
       },
       {
         title: 'Assign User',
         type: 'icon',
         label: 'Assign User',
         icon: 'card',
+        bgColor: "bg-orange-500", // Orange
       },
       {
         title: 'Trigger Chatbot',
         type: 'icon',
         label: 'Trigger Chatbot',
         icon: 'card',
+        bgColor: "bg-teal-500", // Teal
       },
       {
         title: 'Update Chat Status',
         type: 'icon',
         label: 'Update Chat Status',
         icon: 'card',
+        bgColor: "bg-indigo-500", // Indigo
       },
       {
         title: 'Template',
         type: 'icon',
         label: 'Template',
         icon: 'card',
+        bgColor: "bg-pink-500", // Pink
       },
       {
         title: 'Time Delay',
         type: 'icon',
         label: 'Time Delay',
         icon: 'card',
+        bgColor: "bg-gray-500", // Gray
       },
-    ]  
-  },
+    ]
+  },  
   {
     label: 'Integrations',
     type: 'action',
@@ -120,6 +134,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         type: 'icon',
         label: 'Webhook',
         icon: 'message',
+        bgColor: "bg-slate-500",
         
       },
 
@@ -128,6 +143,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
         type: 'icon',
         label: 'Google Spreadsheet',
         icon: 'button',
+        bgColor: "bg-blue-500",
       },
     ],
   },

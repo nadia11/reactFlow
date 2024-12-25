@@ -66,7 +66,10 @@ export const Canvasidebar = () => {
                   return (
                     <div
                       key={index}
-                      className={`mt-1 px-3 py-5 my-2 flex flex-col items-end justify-center bg-${item.bgColor}-300 rounded-xl hover:bg-gray-400 w-full hover:shadow-md transition-all duration-300 cursor-grab`}
+                      className={clsx(
+                        'mt-1 px-3 py-5 my-2 flex flex-col items-end justify-center rounded-2xl hover:bg-gray-400 w-full hover:shadow-md transition-all duration-300 cursor-grab',
+                        item.type !== 'icon' ? item.bgColor : ''
+                      )}
                       draggable
                       onDragStart={(event) =>
                         onDragStart(event, {
@@ -84,28 +87,28 @@ export const Canvasidebar = () => {
                         className={clsx(
                           "flex justify-between items-start w-full", // Common classes
                           item.type === "icon"
-                            ? "flex-col border rounded-2xl items-center justify-center bg-slate-300 px-1 py-2"
+                            ? "flex-col items-center justify-center px-1"
                             : "flex-row" // Conditional layout
                         )}
                       >
                         <div
-                          className={cn("p-2 rounded-full bg-white opacity-25")}
+                          className={cn("p-3 rounded-full")}
                         >
                           <Icon
-                            className={`${item.logoColor}  opacity-100 size-5`}
+                            className={`${item.textColor} size-5`}
                             strokeWidth={9}
                           />
                         </div>
                         <div className="flex flex-col">
                           <h6
-                            className={`text-${item.bgColor}-500 text-sm font-bold`}
+                            className={`${item.textColor} text-sm font-bold`}
                           >
                             {item.title}
                           </h6>
                         </div>
                       </div>
 
-                      <h6 className={`text-${item.bgColor}-500 text-sm`}>
+                      <h6 className={`${item.textColor} text-sm`}>
                         {item.description}
                       </h6>
                     </div>
