@@ -34,7 +34,7 @@
 
       --radius: 0.5rem;
     }
-
+    
     .dark {
       --background: 222.2 84% 4.9%;
       --foreground: 210 40% 98%;
@@ -72,6 +72,32 @@
     }
     body {
       @apply bg-background text-foreground;
+    }
+    input[type="checkbox"] {
+      @apply accent-green-500; /* Use Tailwind's green-500 as the accent color */
+    }
+  
+    input[type="checkbox"]:checked {
+      @apply border-green-500 ring-green-500; /* Add border and ring when checked */
+    }
+  
+    input[type="checkbox"]:focus {
+      @apply ring-2 ring-offset-2 ring-green-500; /* Add focus ring when focused */
+    }
+    input[type="text"] {
+      @apply accent-green-500; /* Use Tailwind's green-500 as the accent color */
+    }
+  
+    input[type="text"]:focus {
+      @apply ring-2 ring-green-500; /* Add focus ring when focused */
+    }
+  
+    textarea {
+      @apply border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500;
+    }
+  
+    select {
+      @apply border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500;
     }
   }
   .react-flow__handle-left{

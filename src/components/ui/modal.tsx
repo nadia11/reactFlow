@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-
+import { Icons } from '@/assets/Icons';
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
         >
-          X
+          <Icons.close/>
         </button>
       </Dialog.Content>
     </Dialog.Root>

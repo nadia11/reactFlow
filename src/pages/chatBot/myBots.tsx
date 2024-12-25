@@ -4,6 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { myBotsData } from '@/MocData/myBots';
 import  Pagination from '../../components/ui/pagination';
 import { Icons } from '@/assets/Icons';
+import toast from 'react-hot-toast';
 
 const MyBots: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -11,6 +12,19 @@ const MyBots: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(2);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isFallbackModalOpen, setIsFallbackModalOpen] = useState(false);
+  const [isFallbackEnabled, setIsFallbackEnabled] = useState(true);
+  const [isTimerModalOpen, setIsTimerModalOpen] = useState(false); // Renamed state
+  const [isExitNotificationEnabled, setIsExitNotificationEnabled] = useState(false);
+  const [timeoutMinutes, setTimeoutMinutes] = useState(30);
+  const [exitNotificationMinutes, setExitNotificationMinutes] = useState(5);
+  const [exitNotificationMessage, setExitNotificationMessage] = useState(
+    "Please type or select from the options above if you would like to continue, else this conversation will reset and you may have to share your responses again."
+  );
+  const [fallbackMessage, setFallbackMessage] = useState(
+    "Sorry, we don't quite understand what you mean, please select or input from the options below."
+  );
+  const [maxFallbackRetries, setMaxFallbackRetries] = useState(3);
   // Filter data based on search query
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -22,7 +36,21 @@ const MyBots: React.FC = () => {
     setRowsPerPage(rows);
     setCurrentPage(1); // Reset to first page when rows per page changes
   };
-
+  const handleSave = () => {
+    toast.success("Chatbot timer settings saved!");
+    setIsTimerModalOpen(false);
+    console.log({
+      timeoutMinutes,
+      isExitNotificationEnabled,
+      exitNotificationMinutes,
+      exitNotificationMessage,
+    });
+  };
+  const handleFallbackSave = () => {
+    setIsFallbackModalOpen(false);
+    // Implement save logic here
+    console.log("Fallback message saved:", fallbackMessage, maxFallbackRetries);
+  };
   // Paginate the data
 
   const handlePageChange = (page: number) => {
@@ -59,10 +87,10 @@ const MyBots: React.FC = () => {
       </div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-2">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md">
+          <button className="bg-green-500 text-white px-4 py-2 rounded-md"   onClick={() => setIsFallbackModalOpen(true)}>
             Fallback Message
           </button>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md">
+          <button className="bg-green-500 text-white px-4 py-2 rounded-md"   onClick={() => setIsTimerModalOpen(true)}>
             Chatbot Timer
           </button>
         </div>
@@ -142,6 +170,54 @@ const MyBots: React.FC = () => {
           </button>
         </form>
       </Modal>
+      <Modal open={isFallbackModalOpen} onClose={() => setIsFallbackModalOpen(false)}>
+        <h2 className="text-lg font-bold mb-4">Fallback Message</h2>
+        <div className="mb-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={isFallbackEnabled}
+              onChange={(e) => setIsFallbackEnabled(e.target.checked)}
+              className="form-checkbox"
+            />
+            <span>Enable fallback message</span>
+          </label>
+        </div>
+        {isFallbackEnabled && ( <div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">
+            Set fallback message if no keyword is matched in the chatbot:
+          </label>
+          <textarea
+            value={fallbackMessage}
+            onChange={(e) => setFallbackMessage(e.target.value)}
+            className="w-full p-2 border rounded resize-none"
+            rows={4}
+          />
+        </div>
+        <div className="mb-4 flex items-center gap-2">
+          <span>Fallback message will be triggered up to</span>
+          <select
+            value={maxFallbackRetries}
+            onChange={(e) => setMaxFallbackRetries(Number(e.target.value))}
+            className="border p-2 rounded"
+          >
+            {[1, 2, 3, 4, 5].map((retry) => (
+              <option key={retry} value={retry}>
+                {retry}
+              </option>
+            ))}
+          </select>
+          <span>times before chatbot ends.</span>
+        </div>
+        <button
+          onClick={handleFallbackSave}
+          className="bg-green-500 text-white px-4 py-2 rounded-md"
+        >
+          Save
+        </button>
+        </div>)}
+      </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleCloseDeleteModal}>
       <Dialog.Title className="text-xl font-bold mb-4">Confirm</Dialog.Title>
       <p className="mb-4">Do you want to remove this chatbot?</p>
@@ -163,7 +239,81 @@ const MyBots: React.FC = () => {
         </button>
       </div>
     </Modal>
-      {/* {isDeleteModalOpen && <Modal onClose={handleCloseDeleteModal} />} */}
+    <Modal open={isTimerModalOpen} onClose={() => setIsTimerModalOpen(false)}>
+        <h2 className="text-lg font-bold mb-4">Chatbot Timer Settings</h2>
+
+        {/* Timeout Settings */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium">
+            If user does not reply more than
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={timeoutMinutes}
+              onChange={(e) => setTimeoutMinutes(Number(e.target.value))}
+              className="w-16 border rounded px-2 py-1"
+              min={1}
+            />
+            <span>minutes, the chatbot will end automatically.</span>
+          </div>
+        </div>
+
+        {/* Enable Exit Notification */}
+        <div className="mb-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={isExitNotificationEnabled}
+              onChange={(e) => setIsExitNotificationEnabled(e.target.checked)}
+              className="form-checkbox text-green-500"
+            />
+            <span>Enable exit chatbot notification</span>
+          </label>
+        </div>
+
+        {/* Exit Notification Settings */}
+        {isExitNotificationEnabled && (
+          <>
+            <div className="mb-4">
+              <label className="block text-sm font-medium">
+                Exit chatbot notification:
+              </label>
+              <textarea
+                value={exitNotificationMessage}
+                onChange={(e) => setExitNotificationMessage(e.target.value)}
+                className="w-full p-2 border rounded resize-none"
+                rows={4}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium">
+                This exit chatbot notification will show
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  value={exitNotificationMinutes}
+                  onChange={(e) =>
+                    setExitNotificationMinutes(Number(e.target.value))
+                  }
+                  className="w-16 border rounded px-2 py-1"
+                  min={1}
+                />
+                <span>minutes before the chatbot ends.</span>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Save Button */}
+        <button
+          onClick={handleSave}
+          className="bg-green-500 text-white px-4 py-2 rounded-md mt-4"
+        >
+          Save
+        </button>
+      </Modal>
     </div>
   );
 };

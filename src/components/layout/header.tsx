@@ -28,21 +28,21 @@ interface HeaderProps {
   
         {/* Logo Section */}
         <div className="flex items-center space-x-4">
-          <div className="flex items-center text-lg font-semibold text-green-600">
+          <button className="flex items-center text-lg font-semibold text-green-600" onClick={()=>navigate("/")}>
             <span className="bg-green-500 h-8 w-8 rounded-full flex justify-center items-center text-white">
               T
             </span>
             <span className="ml-2">Techzilo</span>
-          </div>
+          </button>
           {/* Navigation Links */}
           <nav className="hidden md:flex space-x-6">
-            <a href="#team-inbox" className="text-gray-600 hover:text-gray-900">
+            <a href="" className="text-gray-600 hover:text-gray-900" onClick={()=>navigate("/teamInbox")}>
               Team Inbox
             </a>
-            <a href="#broadcast" className="text-gray-600 hover:text-gray-900">
+            <a href="" className="text-gray-600 hover:text-gray-900" onClick={()=>navigate("/broadcast")}>
               Broadcast
             </a>
-            <a href="#contacts" className="text-gray-600 hover:text-gray-900">
+            <a href="" className="text-gray-600 hover:text-gray-900" onClick={()=>navigate("/contacts")}>
               Contacts
             </a>
             <div>
@@ -50,7 +50,7 @@ interface HeaderProps {
         <Menu title="Automations" items={menuItems} />
       </div>
 
-            <button className="text-gray-600 hover:text-gray-900" onClick={()=>{navigate("/")}}>
+            <button className="text-gray-600 hover:text-gray-900" onClick={()=>{navigate("/myBots")}}>
               Chatbots
             </button>
           </nav>

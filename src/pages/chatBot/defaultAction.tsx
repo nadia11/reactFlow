@@ -38,7 +38,7 @@ const DefaultActions: React.FC = () => {
       <p className="mb-6 text-gray-700">
         Check when the keyword reply does not match, according to the set working time, use the default reply.
       </p>
-      <div className='flex items-start'>
+      <div className='flex items-start justify-between'>
       <div className='font-bold mr-5'>Current Working Hours: </div>
       <button className="mb-6 px-4 py-2 bg-green-500 text-white rounded hover:bg-gray-400">
         Set Working Hours
