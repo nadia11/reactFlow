@@ -8,10 +8,21 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import toast from "react-hot-toast";
+interface Time {
+  from: string;
+  to: string;
+}
+
+interface Day {
+  closed: boolean;
+  times: Time[];
+}
+
+type WorkingHours = Day[];
 const DefaultActions: React.FC = () => {
   const [isWorkingHoursModalOpen, setWorkingHoursModalOpen] = useState(false);
   const [holidayMode, setHolidayMode] = useState(false);
-  const [workingHours, setWorkingHours] = useState(
+  const [workingHours, setWorkingHours] = useState<WorkingHours>(
     Array(7).fill({
       closed: true,
       times: [{ from: "09:00", to: "17:00" }],
@@ -59,7 +70,7 @@ const DefaultActions: React.FC = () => {
   const handleTimeChange = (
     index: number,
     timeIndex: number,
-    field: "from" | "to",
+    field: keyof Time,
     value: string
   ) => {
     setWorkingHours((prev) =>
@@ -75,7 +86,7 @@ const DefaultActions: React.FC = () => {
       )
     );
   };
-
+  
   const handleAddTimer = (index: number) => {
     setWorkingHours((prev) =>
       prev.map((day, i) =>
@@ -222,7 +233,6 @@ const DefaultActions: React.FC = () => {
                           )
                         }
                         value={time.from}
-                        clockOpen={isClockOpen}
                         onClockClose={() => setIsClockOpen(false)}
                         onClockOpen={() => setIsClockOpen(true)}
                         autoFocus={true}
