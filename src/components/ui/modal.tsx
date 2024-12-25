@@ -11,7 +11,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
-      <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg w-full max-w-md">
+      <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg w-full max-w-2xl">
         {children}
         <button
           onClick={onClose}
