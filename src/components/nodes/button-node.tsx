@@ -17,7 +17,7 @@ export const ButtonsNode = (node: ISelectNode) => {
               <React.Fragment key={index}>
                 {item.type === 'text' ? (
                   <div className='bg-white w-full  p-3 rounded-md'>
-                    <h3 className='text-wrap w-[90%]'>eee</h3>
+                    <h3 className='text-wrap w-[90%]'>{item.message}</h3>
                   </div>
                 ) : (
                   <div className='bg-white   p-3 rounded-md w-[240px]'>
