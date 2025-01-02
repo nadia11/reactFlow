@@ -4,7 +4,8 @@ import { Icons } from "@/assets/Icons";
 
 export enum MessageType{
   TEXT="text",
-  IMAGE="image"
+  IMAGE="image",
+  VIDEO="video"
 }
 interface MessgeData {
   type:MessageType

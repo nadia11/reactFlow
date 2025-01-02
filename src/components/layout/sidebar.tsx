@@ -51,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               className="flex items-center space-x-3 text-gray-700 hover:text-teal-500"
             >
               <LucideUsers size={20} />
-              <span>Contacts</span>
+              <span>Users</span>
             </a>
           </li>
           <li>

@@ -1,6 +1,6 @@
 import { useNodeDataChange } from '@/hooks/useUpdateNode';
 import { useNodeStore } from '@/store/node-data';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,12 +14,12 @@ import { Icons } from '../../assets/Icons';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { MessageType } from '@/types';
-
 import React, { useEffect } from 'react';
 import ImageUpload from './image-upload';
-
+import TextEditor from '../ui/textEditor';
 const MessageForm = () => {
   const { updateNodeData } = useNodeDataChange();
+
   const messageData = z.object({
     type: z.enum(['text', 'image']),
     message: z.any(),
@@ -111,11 +111,16 @@ const MessageForm = () => {
                             <FormControl>
                               {watch(`messages.${index}.type`) ===
                               MessageType.TEXT ? (
-                                <Textarea
-                                  {...field}
-                                  placeholder='Write a message'
-                                  className='w-full'
-                                />
+                                // <Textarea
+                                //   {...field}
+                                //   placeholder='Write a message'
+                                //   className='w-full'
+                                // />
+                                <TextEditor
+                                control={control}
+                                name="message"
+                              />
+                              
                               ) : (
                                 <React.Fragment>
                                   <ImageUpload

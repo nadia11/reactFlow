@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.4",
+    "@draft-js-plugins/emoji": "^4.6.7",
+    "@draft-js-plugins/static-toolbar": "^4.1.4",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -23,6 +26,8 @@
     "check-flow": "file:",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "draft-js": "^0.11.7",
+    "draft-js-emoji-plugin": "^2.1.3",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
     "lodash": "^4.17.21",
@@ -41,6 +46,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.18",
     "@types/lodash": "^4.17.6",
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
