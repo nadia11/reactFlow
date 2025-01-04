@@ -199,24 +199,14 @@ const MessageForm = () => {
                               {watch(`messages.${index}.type`) ===
                               MessageType.TEXT ? (
                                 <TextEditor
-                                  value={
-                                    field.value
-                                      ? EditorState.createWithContent(
-                                          ContentState.createFromText(
-                                            field.value as string
-                                          )
-                                        )
-                                      : EditorState.createEmpty()
-                                  }
-                                  onChange={(newEditorState) => {
-                                    setValue(
-                                      `messages.${index}.message`,
-                                      newEditorState
-                                        .getCurrentContent()
-                                        .getPlainText()
-                                    );
-                                  }}
-                                />
+          value={
+            typeof field.value === 'string'
+              ? field.value
+              : field.value?.url || '' // Use `url` if it's an object, fallback to empty string
+          }
+          onChange={(newValue) => field.onChange(newValue)}
+        />
+                              
                               ) : (
                                 <>
                                   <input

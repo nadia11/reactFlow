@@ -29,7 +29,11 @@ export interface IButtons extends BaseNodeData {
   buttons?:{
     button:string
     type:string
-  }[]
+  }[];
+  headerText?: string; // Add header text
+  footerText?: string; // Add footer text
+  bodyText?: string;
+  mediaHeader?: string | boolean; // Add media header
 }
 export interface ICard{
   title: string

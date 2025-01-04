@@ -150,27 +150,6 @@ const FlowChat = () => {
   const displayNodeData = async (node: ISelectNode) => {
     const newMessages: Message[] = [];
 
-    // if (node.data.message_data) {
-    //   node.data.message_data.messages.forEach(msg => {
-    //     if (msg.type === 'text') {
-    //       newMessages.push({
-    //         nodeId: node.id, // Include nodeId
-    //         node_type: node.type as string,
-    //         type: 'bot',
-    //         content: { type: 'text', message: msg.message },
-    //         timestamp: Date.now(), // Add timestamp
-    //       });
-    //     } else {
-    //       newMessages.push({
-    //         nodeId: node.id, // Include nodeId
-    //         node_type: node.type as string,
-    //         type: 'bot',
-    //         content: { type: 'image', message: msg.message },
-    //         timestamp: Date.now(), // Add timestamp
-    //       });
-    //     }
-    //   });
-    // }
     if (node.data.message_data) {
       node.data.message_data.messages.forEach((msg) => {
         let content;
@@ -254,17 +233,19 @@ const FlowChat = () => {
         node_type: node.type as string,
         type: 'bot',
         content: {
-          type: 'text',
-          message: node.data?.buttons_data?.messages[0]?.message,
+          header: node.data?.buttons_data?.headerText || "", // Include header text
+          body: node.data?.buttons_data?.bodyText || "", // Include body text
+          footer: node.data?.buttons_data?.footerText || "", // Include footer text
         },
         buttons: node.data.buttons_data.buttons.map((button, index) => ({
           label: button.button,
           id: node.id,
-          idx: index
+          idx: index,
         })),
         timestamp: Date.now(), // Add timestamp
       });
     }
+    
 
     // Prepare data to be posted
     const postData = {
@@ -367,177 +348,54 @@ const FlowChat = () => {
   };
   
 
-  const renderButtons = (buttons: { label: string; id: string ,idx?:number }[]) => {
-    return buttons.map((button, index) => (
-      <button
-        key={index}
-        onClick={() => handleButtonClick(button.label, button.id, button.idx)}
-        className='bg-sky-500 text-white py-3 px-6 ml-3 rounded-lg mb-2 mt-4'
-      >
-        {button.label}
-      </button>
-    ));
+  const renderButtons = (
+    buttons: { label: string; id: string; idx?: number }[],
+    headerText?: string,
+    bodyText?: string,
+    footerText?: string
+  ) => {
+    return (
+      <div className="flex flex-col items-center gap-4">
+        {/* Header */}
+        {headerText && (
+          <div className="text-gray-900 text-lg font-semibold bg-white w-full p-3 rounded-md text-center">
+            {headerText}
+          </div>
+        )}
+  
+        {/* Body */}
+        {bodyText && (
+          <div className="text-gray-700 bg-white w-full p-3 rounded-md text-center">
+            {bodyText}
+          </div>
+        )}
+  
+        {/* Buttons */}
+        <div className="flex flex-wrap justify-center gap-3">
+          {buttons.map((button, index) => (
+            <button
+              key={index}
+              onClick={() =>
+                handleButtonClick(button.label, button.id, button.idx)
+              }
+              className="bg-slate-300 py-3 px-6 rounded-lg hover:bg-slate-400"
+            >
+              {button.label}
+            </button>
+          ))}
+        </div>
+  
+        {/* Footer */}
+        {footerText && (
+          <div className="text-gray-500 text-sm bg-white w-full p-3 rounded-md text-center">
+            {footerText}
+          </div>
+        )}
+      </div>
+    );
   };
+  
 
-  // const renderMessageContent = (message: Message) => {
-  //   if (message.node_type === 'card') {
-  //     if (message.cards && message.cards.length > 1) {
-  //       return (
-  //         <div className='w-[200px] h-[300px]'>
-  //           <Carousel
-  //             leftControl={
-  //               <ChevronLeft className='size-7 -mt-14 text-gray-300 hover:p-2 hover:bg-sky-500 rounded-full transition duration-150' />
-  //             }
-  //             rightControl={
-  //               <ChevronRight className='size-7 -mt-14 text-gray-300 hover:p-2 hover:bg-sky-500 rounded-full transition duration-150' />
-  //             }
-  //           >
-  //             {message.cards.map((card, index) => (
-  //               <div
-  //                 key={index}
-  //                 className='bg-white rounded-lg shadow-md w-[200px]'
-  //               >
-  //                 <div className='flex flex-col w-full'>
-  //                   {card.image && (
-  //                     <img
-  //                       src={card.image}
-  //                       alt='card image'
-  //                       className=' object-cover w-full h-[100px]'
-  //                     />
-  //                   )}
-  //                   <div className='flex flex-col px-3 pt-3 pb-0 w-full'>
-  //                     <h1 className='text-gray-900'>{card.title}</h1>
-  //                     {card.description && (
-  //                       <p className='text-gray-600'>{card.description}</p>
-  //                     )}
-  //                     <div className='flex flex-col mt-4'>
-  //                       {card.buttons.map((button, btnIndex) => (
-  //                         <React.Fragment key={btnIndex}>
-  //                           {button.type === 'action' ? (
-  //                             <button
-  //                               onClick={() =>
-  //                                 handleButtonClick(
-  //                                   button.label,
-  //                                   button.id,
-  //                                   btnIndex
-  //                                 )
-  //                               }
-  //                               className='bg-sky-500 text-white py-3 px-5 rounded-lg w-full mb-2'
-  //                             >
-  //                               {button.label}
-  //                             </button>
-  //                           ) : (
-  //                             <a
-  //                               href={button.link}
-  //                               target='_blank'
-  //                               className='bg-sky-500 text-white py-3 px-5 rounded-lg w-full mb-2'
-  //                             >
-  //                               {button.label}
-  //                             </a>
-  //                           )}
-  //                         </React.Fragment>
-  //                       ))}
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             ))}
-  //           </Carousel>
-  //         </div>
-  //       );
-  //     } else if (message.cards && message.cards.length === 1) {
-  //       const card = message.cards[0];
-  //       return (
-  //         <div key={0} className='bg-white rounded-lg shadow-md w-[200px]'>
-  //           <div className='flex flex-col w-full'>
-  //             {card.image && (
-  //               <img
-  //                 src={card.image}
-  //                 alt='card image'
-  //                 className='w-full object-cover h-[100px]'
-  //               />
-  //             )}
-  //             <div className='flex flex-col px-3 pt-3 pb-0 w-full'>
-  //               <h1 className='text-gray-900'>{card.title}</h1>
-  //               {card.description && (
-  //                 <p className='text-gray-600'>{card.description}</p>
-  //               )}
-  //               <div className='flex flex-col mt-4'>
-  //                 {card.buttons.map((button, btnIndex) => (
-  //                   <React.Fragment key={btnIndex}>
-  //                     {button.type === 'action' ? (
-  //                       <button
-  //                         onClick={() =>
-  //                           handleButtonClick(button.label, button.id, btnIndex)
-  //                         }
-  //                         className='bg-sky-500 text-white py-3 px-5 rounded-lg w-full mb-2'
-  //                       >
-  //                         {button.label}
-  //                       </button>
-  //                     ) : (
-  //                       <a
-  //                         href={button.link}
-  //                         target='_blank'
-  //                         className='bg-sky-500 text-white py-3 px-5 rounded-lg w-full mb-2'
-  //                       >
-  //                         {button.label}
-  //                       </a>
-  //                     )}
-  //                   </React.Fragment>
-  //                 ))}
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       );
-  //     } else {
-  //       return null;
-  //     }
-  //   } else if (message.node_type === 'buttons') {
-  //     return (
-  //       <div className={cn('max-w-xs py-3 px-5 rounded-lg flex gap-2')}>
-  //         <div
-  //           className={cn(
-  //             'py-3 px-4 rounded-lg',
-  //             message.type === 'user'
-  //               ? 'self-end bg-green-500 text-white'
-  //               : 'self-start bg-white text-gray-900'
-  //           )}
-  //         >
-  //           {' '}
-  //           {message.content.type === 'text' && message.content.message}
-  //         </div>
-  //       </div>
-  //     );
-  //   } else {
-  //     return (
-  //       <div className='flex flex-col gap-1'>
-  //         {message.content.type === 'text' ? (
-  //           <div className='flex  gap-0.5'>
-  //             <div
-  //               className={cn(
-  //                 'max-w-xs py-2 px-5 rounded-lg mb-2',
-  //                 message.type === 'user'
-  //                   ? 'self-end bg-green-500 text-white'
-  //                   : 'self-start bg-white rounded-lg text-gray-900'
-  //               )}
-  //             >
-  //               {message.content.message}
-  //             </div>
-  //           </div>
-  //         ) : (
-  //           <div className='flex pb-5'>
-  //             <img
-  //               src={message.content.message}
-  //               alt='image'
-  //               className='rounded-lg object-cover w-[200px] h-[100px]'
-  //             />
-  //           </div>
-  //         )}
-  //       </div>
-  //     );
-  //   }
-  // };
   const renderMessageContent = (message: Message) => {
     if (message.node_type === 'card') {
       if (message.cards && message.cards.length > 1) {
@@ -758,11 +616,36 @@ const FlowChat = () => {
                   }`}
                 >
                   {renderMessageContent(message)}
-                  <div className=''>
-                    {message.node_type !== 'message' &&
-                      message.buttons &&
-                      renderButtons(message.buttons)}
-                  </div>
+                  <div className="flex flex-col items-center gap-4">
+  {/* Header */}
+  {message.content?.header && (
+    <div className="text-lg font-semibold w-full py-1 rounded-md">
+      {message.content.header}
+    </div>
+  )}
+
+  {/* Body */}
+  {message.content?.body && (
+    <div className="w-full rounded-md">
+      {message.content.body}
+    </div>
+  )}
+
+  {/* Buttons */}
+  {message.node_type !== "message" && message.buttons && (
+    <div className="flex flex-wrap justify-center gap-3">
+      {renderButtons(message.buttons)}
+    </div>
+  )}
+
+  {/* Footer */}
+  {message.content?.footer && (
+    <div className="text-md  w-full pb-1 rounded-md">
+      {message.content.footer}
+    </div>
+  )}
+</div>
+
                 </div>
               ))}
               {botLoading && ( // Show loading indicator if bot is loading
