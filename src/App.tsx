@@ -10,7 +10,8 @@ import UnderConstruction from './pages/shared/underConstruction';
 import { Toaster } from 'react-hot-toast';
 import ReplyActionPage from './pages/chatBot/replyActionPage';
 import Register from './pages/chatBot/register';
-
+import FlowWithJson from './pages/chatBot/testBot';
+import TestBot from './pages/chatBot/testBot';
 function App() {
   const location = useLocation();
   // Define routes that should not include the Layout
@@ -27,8 +28,9 @@ function App() {
     ) : (
       <Layout>
         <Routes>
-          <Route path="/" element={<ChatFlow />} /> {/* Main Dashboard */}
+          <Route path="/" element={<ChatFlow/>} /> {/* Main Dashboard */}
           <Route path="/myBots" element={<MyBots />} /> {/* MyBots Page */}
+          <Route path="/testBot" element={<TestBot />} /> {/* MyBots Page */}
           <Route path="/defaultActions" element={<DefaultActions />} /> {/* Default Action Page */}
           <Route path="/keywordActions" element={<KeywordAction />} /> {/* Keyword Action Page */}
           <Route path="/replyActions" element={<ReplyActionPage />} /> {/* Reply Action Page */}
