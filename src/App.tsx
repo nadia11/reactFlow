@@ -12,11 +12,6 @@ import ReplyActionPage from './pages/chatBot/replyActionPage';
 import Register from './pages/chatBot/register';
 
 function App() {
-  // if (!window.setImmediate) {
-  //   window.setImmediate = function(callback) {
-  //     setTimeout(callback, 0);
-  //   };
-  // }
   const location = useLocation();
   // Define routes that should not include the Layout
   const noLayoutRoutes = ['/login', '/register'];

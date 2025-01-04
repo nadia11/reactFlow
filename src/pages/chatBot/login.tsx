@@ -26,9 +26,27 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // Logic for Google Sign-In (using a library like react-google-login)
-    alert('Google Sign-In not implemented.');
+  const handleGoogleSignIn = async() => {
+    const googleSignInUrl = 'http://localhost:5000/auth/google';
+  
+    const width = 500;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+  
+    const popup = window.open(
+      googleSignInUrl,
+      'GoogleSignIn',
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+  
+    const pollTimer = setInterval(() => {
+      if (popup?.closed) {
+        clearInterval(pollTimer);
+        alert('Google Sign-In process completed or canceled.');
+        // Optionally, you can refresh tokens or fetch user data here
+      }
+    }, 1000);
   };
 
   return (

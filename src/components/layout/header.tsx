@@ -82,7 +82,7 @@ interface HeaderProps {
             onClick={() => setLoginModalOpen(false)}
             className="text-gray-700 hover:text-gray-900"
           >
-            <LogOut size={20} />
+            <LogOut size={20} onClick={()=>{navigate("/login")}}/>
           </button>
         </div>
 
