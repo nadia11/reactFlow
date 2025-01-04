@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { useNodeDataChange } from '@/hooks/useUpdateNode';
 import { useNodeStore } from '@/store/node-data';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { EditorState, ContentState } from 'draft-js';
 import {
   Form,
   FormControl,
@@ -192,12 +193,30 @@ const MessageForm = () => {
                       <FormField
                         control={control}
                         name={`messages.${index}.message` as const}
-                        render={() => (
+                        render={({field}) => (
                           <FormItem className="flex flex-col">
                             <FormControl>
                               {watch(`messages.${index}.type`) ===
                               MessageType.TEXT ? (
-                                <TextEditor />
+                                <TextEditor
+                                  value={
+                                    field.value
+                                      ? EditorState.createWithContent(
+                                          ContentState.createFromText(
+                                            field.value as string
+                                          )
+                                        )
+                                      : EditorState.createEmpty()
+                                  }
+                                  onChange={(newEditorState) => {
+                                    setValue(
+                                      `messages.${index}.message`,
+                                      newEditorState
+                                        .getCurrentContent()
+                                        .getPlainText()
+                                    );
+                                  }}
+                                />
                               ) : (
                                 <>
                                   <input
