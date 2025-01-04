@@ -108,7 +108,10 @@
 /* .react-flow__handle-right {
   @apply  z-[9999] border-none ml-4 bg-transparent ;
 } */
-
+.e8k2yoa{
+  border: none!important;
+  width:0px!important;
+}
 
 
 
