@@ -14,13 +14,21 @@ import {
 import { Icons } from '../../assets/Icons';
 import { Button } from '../ui/button';
 import TextEditor from '../ui/textEditor';
+import { MessageType } from '@/types';
 
 const MessageForm = () => {
   const { updateNodeData } = useNodeDataChange();
 
+  // Updated schema to handle consistent types
   const messageData = z.object({
-    type: z.enum(['text', 'image', 'video', 'audio', 'document']),
-    message: z.any(),
+    type: z.nativeEnum(MessageType),
+    message: z.union([
+      z.string(),
+      z.object({
+        name: z.string(),
+        url: z.string(),
+      }),
+    ]),
   });
 
   const messageSchema = z.object({
@@ -28,11 +36,22 @@ const MessageForm = () => {
   });
 
   const { state, dispatch } = useNodeStore();
+
   const defaultValues = {
-    messages: state.selectedNode?.data.message_data?.messages,
+    messages: state.selectedNode?.data.message_data?.messages || [
+      {
+        type: MessageType.TEXT,
+        message: '',
+      },
+    ],
   };
 
-  const methods = useForm({
+  const methods = useForm<{
+    messages: Array<{
+      type: MessageType;
+      message: string | { name: string; url: string };
+    }>;
+  }>({
     mode: 'all',
     resolver: zodResolver(messageSchema),
     defaultValues,
@@ -48,7 +67,7 @@ const MessageForm = () => {
   useEffect(() => {
     setValue('messages', [
       {
-        type: 'text',
+        type: MessageType.TEXT,
         message: '',
       },
     ]);
@@ -64,17 +83,30 @@ const MessageForm = () => {
     fileReader.onload = () => {
       setValue(`messages.${index}.message`, {
         name: file.name,
-        url: fileReader.result,
+        url: fileReader.result as string,
       });
     };
 
     fileReader.readAsDataURL(file);
   };
 
-  const renderPreview = (file: any, type: string) => {
-    if (!file || !file.url) return null;
+  const renderPreview = (
+    file: string | { name: string; url: string },
+    type: MessageType
+  ) => {
+    if (!file || typeof file === 'string') return null;
 
-    if (type === 'video') {
+    if (type === MessageType.IMAGE) {
+      return (
+        <img
+          src={file.url}
+          alt={file.name}
+          className="w-full h-auto rounded-md"
+        />
+      );
+    }
+
+    if (type === MessageType.VIDEO) {
       return (
         <video controls className="w-full h-auto">
           <source src={file.url} type="video/mp4" />
@@ -83,7 +115,7 @@ const MessageForm = () => {
       );
     }
 
-    if (type === 'audio') {
+    if (type === MessageType.AUDIO) {
       return (
         <audio controls className="w-full">
           <source src={file.url} type="audio/mpeg" />
@@ -92,7 +124,7 @@ const MessageForm = () => {
       );
     }
 
-    if (type === 'document') {
+    if (type === MessageType.DOCUMENT) {
       const isPDF = file.name.endsWith('.pdf');
       return isPDF ? (
         <embed
@@ -160,26 +192,30 @@ const MessageForm = () => {
                       <FormField
                         control={control}
                         name={`messages.${index}.message` as const}
-                        render={({ field }) => (
+                        render={() => (
                           <FormItem className="flex flex-col">
                             <FormControl>
-                              {watch(`messages.${index}.type`) === 'text' ? (
-                                <TextEditor
-                                  control={control}
-                                  name={`messages.${index}.message`}
-                                />
+                              {watch(`messages.${index}.type`) ===
+                              MessageType.TEXT ? (
+                                <TextEditor />
                               ) : (
                                 <>
                                   <input
                                     type="file"
                                     accept={
                                       watch(`messages.${index}.type`) ===
-                                      'video'
+                                      MessageType.IMAGE
+                                        ? 'image/*'
+                                        : watch(`messages.${index}.type`) ===
+                                          MessageType.VIDEO
                                         ? 'video/*'
                                         : watch(`messages.${index}.type`) ===
-                                          'audio'
+                                          MessageType.AUDIO
                                         ? 'audio/*'
-                                        : '.pdf,.xlsx,.csv'
+                                        : watch(`messages.${index}.type`) ===
+                                          MessageType.DOCUMENT
+                                        ? '.pdf,.xlsx,.csv'
+                                        : ''
                                     }
                                     onChange={(e) =>
                                       handleFileChange(
@@ -209,7 +245,7 @@ const MessageForm = () => {
                     onClick={() =>
                       append({
                         message: '',
-                        type: 'text',
+                        type: MessageType.TEXT,
                       })
                     }
                     className="w-full sm:w-auto bg-transparent text-black font-semibold hover:bg-gray-300 self-start border border-black"
@@ -222,7 +258,20 @@ const MessageForm = () => {
                     onClick={() =>
                       append({
                         message: '',
-                        type: 'video',
+                        type: MessageType.IMAGE,
+                      })
+                    }
+                    className="w-full sm:w-auto bg-transparent text-black font-semibold hover:bg-gray-300 self-start border border-black"
+                  >
+                    <Icons.plus size={20} className="mr-1" />
+                    Image
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      append({
+                        message: '',
+                        type: MessageType.VIDEO,
                       })
                     }
                     className="w-full sm:w-auto bg-transparent text-black font-semibold hover:bg-gray-300 self-start border border-black"
@@ -235,7 +284,7 @@ const MessageForm = () => {
                     onClick={() =>
                       append({
                         message: '',
-                        type: 'audio',
+                        type: MessageType.AUDIO,
                       })
                     }
                     className="w-full sm:w-auto bg-transparent text-black font-semibold hover:bg-gray-300 self-start border border-black"
@@ -248,7 +297,7 @@ const MessageForm = () => {
                     onClick={() =>
                       append({
                         message: '',
-                        type: 'document',
+                        type: MessageType.DOCUMENT,
                       })
                     }
                     className="w-full sm:w-auto bg-transparent text-black font-semibold hover:bg-gray-300 self-start border border-black"

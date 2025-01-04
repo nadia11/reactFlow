@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import  { useState, useRef, useCallback, useEffect } from 'react';
 import { EditorState, ContentState, RichUtils } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createEmojiPlugin from '@draft-js-plugins/emoji';
@@ -27,8 +27,7 @@ const TextEditor = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(ContentState.createFromText(initialText))
   );
-  const editorRef = useRef(null);
-
+  const editorRef = useRef<Editor | null>(null);
 
 
   const focusEditor = useCallback(() => {
@@ -39,11 +38,11 @@ const TextEditor = () => {
   useEffect(() => {
     focusEditor();
   }, [focusEditor]);
-  const handleChange = (newEditorState) => {
+  const handleChange = (newEditorState:EditorState) => {
     setEditorState(newEditorState);
   };
 
-  const handleKeyCommand = (command) => {
+  const handleKeyCommand = (command:string) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       setEditorState(newState);

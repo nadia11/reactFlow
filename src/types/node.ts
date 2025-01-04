@@ -2,10 +2,12 @@ import { Node } from "reactflow";
 import { BaseNodeData } from ".";
 import { Icons } from "@/assets/Icons";
 
-export enum MessageType{
-  TEXT="text",
-  IMAGE="image",
-  VIDEO="video"
+export enum MessageType {
+  TEXT = "text",
+  IMAGE = "image",
+  VIDEO = "video",
+  AUDIO = "audio",
+  DOCUMENT = "document",
 }
 interface MessgeData {
   type:MessageType
