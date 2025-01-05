@@ -82,8 +82,8 @@ export enum ENodeType {
 }
   
 export interface BaseNodeData {
-  label: string;
-  icon: keyof typeof Icons;
+  label?: string;
+  icon?: keyof typeof Icons;
   description?: string;
 }
 

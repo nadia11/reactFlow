@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleGoogleSignIn = async() => {
+  const handleGoogleSignIn = () => {
     const googleSignInUrl = 'http://localhost:5000/auth/google';
   
     const width = 500;
@@ -40,14 +40,35 @@ const Login: React.FC = () => {
       `width=${width},height=${height},top=${top},left=${left}`
     );
   
+    // Listen for messages from the popup
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'http://localhost:5000') {
+        // Ignore messages from unknown origins
+        return;
+      }
+  
+      const { token, user } = event.data;
+  
+      if (token) {
+        // Save token and user info in sessionStorage
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('user', JSON.stringify(user));
+  
+        // Redirect to MyBots page
+        window.location.href = '/myBots';
+      } else {
+        alert('Google Sign-In failed. Please try again.');
+      }
+    });
+  
     const pollTimer = setInterval(() => {
       if (popup?.closed) {
         clearInterval(pollTimer);
         alert('Google Sign-In process completed or canceled.');
-        // Optionally, you can refresh tokens or fetch user data here
       }
     }, 1000);
   };
+  
 
   return (
     <div className="flex items-center justify-center bg-gray-100 w-full h-screen">

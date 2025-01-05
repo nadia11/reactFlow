@@ -13,16 +13,15 @@ import {
 import { Icons } from '../../assets/Icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { cn } from '@/lib/utils';
 import TextEditor from '../ui/textEditor';
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 
 const ButtonsForm = () => {
   const { updateNodeData } = useNodeDataChange();
   
   // Schema
   const messageSchema = z.object({
-    mediaHeader: z.boolean().optional(),
+    mediaHeader: z.boolean().default(false),
     headerText: z.string().max(60).optional(),
     bodyText: z.string().max(1024).nonempty(),
     footerText: z.string().max(60).optional(),
@@ -63,10 +62,10 @@ const ButtonsForm = () => {
 
   useEffect(() => {
     if (state.selectedNode?.data.buttons_data) {
-      setValue('mediaHeader', state.selectedNode?.data.buttons_data.mediaHeader);
-      setValue('headerText', state.selectedNode?.data.buttons_data.headerText);
-      setValue('bodyText', state.selectedNode?.data.buttons_data.bodyText);
-      setValue('footerText', state.selectedNode?.data.buttons_data.footerText);
+      setValue('mediaHeader', state.selectedNode?.data.buttons_data.mediaHeader||false);
+      setValue('headerText', state.selectedNode?.data.buttons_data.headerText || "");
+      setValue('bodyText', state.selectedNode?.data.buttons_data.bodyText || "");
+      setValue('footerText', state.selectedNode?.data.buttons_data.footerText || "");
       setValue('buttons', state.selectedNode?.data.buttons_data.buttons || []);
     }
   }, [setValue, state.selectedNode?.data]);
@@ -104,9 +103,10 @@ const ButtonsForm = () => {
                   name="mediaHeader"
                   render={({ field }) => (
                     <input
-                      {...field}
                       type="checkbox"
                       className="toggle-checkbox"
+                      checked={field.value === true || field.value === 'true'} // Handle string 'true'
+                      onChange={(e) => field.onChange(e.target.checked)} // Pass boolean value
                     />
                   )}
                 />

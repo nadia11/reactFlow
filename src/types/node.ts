@@ -11,13 +11,13 @@ export enum MessageType {
 }
 interface MessgeData {
   type:MessageType
-  message:string
+  message:string| { name: string; url: string }
 }
 
 
 export interface MessageNodeData extends BaseNodeData{
  messages:MessgeData[]
-};
+}
 export interface ButtonNodeData{
   type:MessageType
   message:string
@@ -44,7 +44,7 @@ export interface ICard{
   buttons:{
     name:string
     type: "action" | "url"
-    link:""
+    link:string;
   }[]
 }
 export type NodeDataType = {

@@ -31,7 +31,7 @@ export const ButtonsNode = (node: ISelectNode) => {
           )}
 
           {/* Body Messages */}
-          {messages?.length > 0 &&
+          {messages && messages?.length > 0 &&
             messages.map((item, index) => (
               <React.Fragment key={index}>
                 {item.type === "text" ? (

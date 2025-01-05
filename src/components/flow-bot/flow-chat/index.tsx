@@ -14,8 +14,11 @@ interface Message {
   node_type: string;
   type: 'user' | 'bot';
   content: {
-    type: 'text' | 'image';
-    message: string;
+    header?: string;
+    body?: string;
+    footer?:string;
+    type?: 'text' | 'image';
+    message?: any;
     description?: string;
     image?: string;
   };
@@ -147,12 +150,15 @@ const FlowChat = () => {
   //     return [...prevMessages, ...uniqueNewMessages];
   //   });
   // };
+  function isObjectWithUrl(message: string | { name: string; url: string }): message is { name: string; url: string } {
+    return typeof message === 'object' && 'url' in message;
+  }
   const displayNodeData = async (node: ISelectNode) => {
     const newMessages: Message[] = [];
 
     if (node.data.message_data) {
       node.data.message_data.messages.forEach((msg) => {
-        let content;
+        let content:any;
     
         switch (msg.type) {
           case 'text':
@@ -160,25 +166,47 @@ const FlowChat = () => {
             break;
     
           case 'image':
-            content = { type: 'image', message: msg.message.url || msg.message };
+            if (isObjectWithUrl(msg.message)) {
+              content = { type: 'image', message: msg.message.url };
+            } else {
+              content = { type: 'image', message: msg.message };
+            }
             break;
     
           case 'video':
-            content = { type: 'video', message: msg.message.url || msg.message };
+            if (isObjectWithUrl(msg.message)) {
+              content = { type: 'video', message: msg.message.url };
+            } else {
+              content = { type: 'video', message: msg.message };
+            }
             break;
     
           case 'audio':
-            content = { type: 'audio', message: msg.message.url || msg.message };
+            if (isObjectWithUrl(msg.message)) {
+              content = { type: 'audio', message: msg.message.url };
+            } else {
+              content = { type: 'audio', message: msg.message };
+            }
             break;
     
           case 'document':
-            content = {
-              type: 'document',
-              message: {
-                url: msg.message.url || msg.message,
-                name: msg.message.name || 'Document',
-              },
-            };
+            if (isObjectWithUrl(msg.message)) {
+              content = {
+                type: 'document',
+                message: {
+                  url: msg.message.url,
+                  name: msg.message.name || 'Document',
+                },
+              };
+            } else {
+              content = {
+                type: 'document',
+                message: {
+                  url: msg.message,
+                  name: 'Document',
+                },
+              };
+            }
             break;
     
           default:
@@ -197,6 +225,7 @@ const FlowChat = () => {
         }
       });
     }
+  
     
     if (node.data.card_data?.cards) {
       const cards = node.data.card_data.cards.map(card => ({
