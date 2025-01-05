@@ -1,7 +1,7 @@
 import 'reactflow/dist/style.css';
-import { Routes, Route , useLocation} from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Layout from './components/layout';
-import { ChatFlow} from './pages/chatBot/chatFlow';
+import { ChatFlow } from './pages/chatBot/chatFlow';
 import DefaultActions from './pages/chatBot/defaultAction';
 import Login from './pages/chatBot/login';
 import MyBots from './pages/chatBot/myBots';
@@ -10,35 +10,86 @@ import UnderConstruction from './pages/shared/underConstruction';
 import { Toaster } from 'react-hot-toast';
 import ReplyActionPage from './pages/chatBot/replyActionPage';
 import Register from './pages/chatBot/register';
-import FlowWithJson from './pages/chatBot/testBot';
 import TestBot from './pages/chatBot/testBot';
+
+interface PrivateRouteProps {
+  children: React.ReactNode; // Specify the type for children
+}
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children })=> {
+  const token = sessionStorage.getItem('token'); // Check token in session storage
+  return token ? children : <Navigate to="/login" replace />;
+}
+
 function App() {
   const location = useLocation();
   // Define routes that should not include the Layout
   const noLayoutRoutes = ['/login', '/register'];
   const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
+
   return (
     <>
-    <Toaster position="top-right" reverseOrder={false} />
-    {isNoLayoutRoute ? (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />  
-      </Routes>
-    ) : (
-      <Layout>
+      <Toaster position="top-right" reverseOrder={false} />
+      {isNoLayoutRoute ? (
         <Routes>
-          <Route path="/" element={<ChatFlow/>} /> {/* Main Dashboard */}
-          <Route path="/myBots" element={<MyBots />} /> {/* MyBots Page */}
-          <Route path="/testBot" element={<TestBot />} /> {/* MyBots Page */}
-          <Route path="/defaultActions" element={<DefaultActions />} /> {/* Default Action Page */}
-          <Route path="/keywordActions" element={<KeywordAction />} /> {/* Keyword Action Page */}
-          <Route path="/replyActions" element={<ReplyActionPage />} /> {/* Reply Action Page */}
-          <Route path="*" element={<UnderConstruction />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
-      </Layout>
-    )}
-  </>
+      ) : (
+        <Layout>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <ChatFlow />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/myBots"
+              element={
+                <PrivateRoute>
+                  <MyBots />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/testBot"
+              element={
+                <PrivateRoute>
+                  <TestBot />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/defaultActions"
+              element={
+                <PrivateRoute>
+                  <DefaultActions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/keywordActions"
+              element={
+                <PrivateRoute>
+                  <KeywordAction />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/replyActions"
+              element={
+                <PrivateRoute>
+                  <ReplyActionPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<UnderConstruction />} />
+          </Routes>
+        </Layout>
+      )}
+    </>
   );
 }
 
