@@ -7,12 +7,14 @@ import Modal from '../ui/modal';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
 import api from '@/configs/api';
-
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 export const FlowBotHeader = () => {
   const { state } = useNodeStore();
   const { dispatch } = useGlobalStore();
   const [modalOpen, setModalOpen] = useState(false);
   const [chatBotName, setChatBotName] = useState('');
+  const navigate=useNavigate();
  const demoChatId="d290f1ee-6c54-4b01-90e6-d701748f0851";
  const generateChatbotId = () => uuidv4();
   const onTestBotClick = () => {
@@ -105,7 +107,7 @@ export const FlowBotHeader = () => {
               <Button
             variant={'outline'}
             className='bg-green-500 text-white hover:bg-sky-200 border focus:outline-none '
-          
+          onClick={()=>{navigate("/")}}
         >
             Add new
         </Button>

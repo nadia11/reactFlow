@@ -54,7 +54,7 @@ function App() {
               }
             />
             <Route
-              path="/testBot"
+              path="/bot/:id?"
               element={
                 <PrivateRoute>
                   <TestBot />
