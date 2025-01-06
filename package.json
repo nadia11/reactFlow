@@ -43,6 +43,7 @@
     "reactflow": "^11.11.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "uuidv4": "^6.2.13",
     "zod": "^3.23.8"
   },
   "devDependencies": {

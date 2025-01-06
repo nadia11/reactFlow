@@ -19,6 +19,7 @@ interface HeaderProps {
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const navigate = useNavigate();
 
+
     return (
       <>
       <header className="w-full bg-white h-16 shadow-md flex items-center px-4 justify-between border-b border-slate-200">

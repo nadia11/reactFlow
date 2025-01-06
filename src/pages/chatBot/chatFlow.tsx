@@ -16,6 +16,7 @@ import { useNodeStore } from '../../store/node-data';
 import Sidebar from '../../components/flow-bot/sidebar';
 import { FlowBotHeader } from '../../components/flow-bot/flow-bot-header';
 import CustomConnectionLine from '../../components/flow-bot/connection-line';
+import { ReactFlowInstance } from 'reactflow';
 import { useGlobalStore } from '../../store';
 import FlowChat from '../../components/flow-bot/flow-chat';
 const proOptions = { hideAttribution: true };
@@ -49,7 +50,13 @@ export function ChatFlow({ initialNodesProp = [], initialEdgesProp = [] }: { ini
   const handleDrawerClose = () => {
     dispatch({ type: 'SET_DRAWER_OPEN', payload: false });
   };
+  const handleInit = (instance: ReactFlowInstance) => {
+    // Store the instance in the NodeStore
+    dispatch({ type: 'SET_REACT_FLOW_INSTANCE', payload: instance });
 
+    // Call the existing setReactFlowInstance logic if required
+    setReactFlowInstance(instance); // Ensure this is called if already defined
+  };
   const { state: globalState } = useGlobalStore();
 
   return (
@@ -87,9 +94,9 @@ export function ChatFlow({ initialNodesProp = [], initialEdgesProp = [] }: { ini
                 onDragOver,
               }}
               nodeTypes={nodeTypes as any}
+              onInit={handleInit}
               defaultNodes={initialNodes}
               defaultEdges={initialEdges}
-              onInit={setReactFlowInstance}
               nodesConnectable={true}
               connectionLineComponent={CustomConnectionLine}
               maxZoom={2}
