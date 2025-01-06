@@ -111,7 +111,8 @@ const MyBots: React.FC = () => {
                   className="bg-slate-200 rounded-2xl p-2 mr-1"
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent navigation when editing
-                    toast.success('Edit chatbot functionality pending');
+                    navigate(`/bot?chatId=${bot.id}`)
+
                   }}
                 >
                   <Icons.edit className="size-5" strokeWidth="1" />
