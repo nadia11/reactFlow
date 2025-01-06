@@ -24,7 +24,7 @@ function App() {
   const location = useLocation();
   // Define routes that should not include the Layout
   const noLayoutRoutes = ['/login', '/register'];
-  const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
+  const isNoLayoutRoute = noLayoutRoutes.some((route) => route === location.pathname);
 
   return (
     <>

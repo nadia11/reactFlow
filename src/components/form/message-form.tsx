@@ -248,7 +248,7 @@ const MessageForm = () => {
                   </div>
                 ))}
 
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-5 flex-wrap">
                   <Button
                     type="button"
                     onClick={() =>

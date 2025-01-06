@@ -18,6 +18,8 @@ const Login: React.FC = () => {
         role: 'BOTCREATOR',
       });
       sessionStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+
       alert('Login successful!');
       navigate("/");
     } catch (error) {
@@ -116,6 +118,15 @@ const Login: React.FC = () => {
         >
           Sign in with Google
         </button>
+        <p className="text-md text-gray-600 text-center pt-5">
+          Don't have an account?{' '}
+          <a
+            href="/register"
+            className="text-blue-500 hover:underline"
+          >
+            Register
+          </a>
+        </p>
       </form>
     </div>
   );

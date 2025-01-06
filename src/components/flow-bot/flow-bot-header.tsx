@@ -34,7 +34,22 @@ export const FlowBotHeader = () => {
     const nodes = state.reactFlowInstance.getNodes();
     const edges = state.reactFlowInstance.getEdges();
 
-    const payload = {
+    const payload: {
+      chatBotName: string;
+      chatbotId?: string; // Optional chatbotId
+      nodes: {
+        id: string;
+        type: string | undefined;
+        data: any;
+        position: { x: number; y: number };
+      }[];
+      edges: {
+        id: string;
+        source: string;
+        target: string;
+        type: string;
+      }[];
+    }  = {
       chatBotName,
       nodes: nodes.map((node) => ({
         id: node.id,
