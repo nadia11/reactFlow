@@ -7,7 +7,8 @@ import { LogOut, Settings, Copy, Info, Bell, Smartphone, HelpCircle, Mail } from
 interface HeaderProps {
     onMenuClick: () => void;
   }
-  const user = JSON.parse(sessionStorage.getItem('user'))||null;
+  const storageUser = sessionStorage.getItem('user');
+  const user = storageUser? JSON.parse(storageUser) :null;
   const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     const menuItems = [
       { label: 'Default Action', route: '/defaultActions' },

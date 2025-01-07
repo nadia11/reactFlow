@@ -140,10 +140,12 @@ const ButtonsForm = ({ onClose }: { onClose: () => void }) => {
                   <FormItem className="flex flex-col">
                     <label className="text-gray-900">Body Text</label>
                     <FormControl>
+                      <div className='pt-16 pb-2 px-2 border rounded-sm'>
                       <TextEditor
                         value={field.value}
                         onChange={(val: string) => field.onChange(val)}
                       />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
