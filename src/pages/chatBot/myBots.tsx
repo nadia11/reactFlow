@@ -4,8 +4,8 @@ import Pagination from '../../components/ui/pagination';
 import { Icons } from '@/assets/Icons';
 import toast from 'react-hot-toast';
 import api from '@/configs/api'; // Your API interceptor
-import Modal
- from '@/components/ui/modal';
+import Modal from '@/components/ui/modal';
+import { v4 as uuidv4 } from 'uuid';
 const MyBots: React.FC = () => {
   const [chatbots, setChatbots] = useState([]); // Store chatbots fetched from the API
   const [search, setSearch] = useState('');
@@ -47,6 +47,40 @@ const MyBots: React.FC = () => {
       toast.error('Failed to delete chatbot');
     }
   };
+  const generateChatbotId = () => uuidv4();
+  const handleImport = async (file: File) => {
+    try {
+      const reader = new FileReader();
+  
+      reader.onload = async (e) => {
+        if (!e.target?.result) return;
+  
+        try {
+          const json = JSON.parse(e.target.result as string);
+  
+          // If 'name' is missing, use the file name without the extension
+          if (!json.name) {
+            const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, ''); // Remove file extension
+            json.chatBotName = fileNameWithoutExtension;
+            json.chatbotId== generateChatbotId();
+          }
+  
+          await api.post('/nodes/chatflow', json); // POST the JSON to your endpoint
+          toast.success('Chatbot imported successfully');
+          fetchChatbots(currentPage, rowsPerPage); // Refresh the chatbot list
+        } catch (error) {
+          console.error('Failed to import chatbot:', error);
+          toast.error('Failed to import chatbot');
+        }
+      };
+  
+      reader.readAsText(file);
+    } catch (error) {
+      console.error('Error importing chatbot:', error);
+      toast.error('Error importing chatbot');
+    }
+  };
+  
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -74,13 +108,30 @@ const MyBots: React.FC = () => {
           Watch Tutorial
         </a>
       </div>
-      <div className="flex items-center mb-4">
+      <div className="flex items-center justify-between mb-4">
         <input
           type="text"
           placeholder="Search Your Bots..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="p-2 border border-gray-300 rounded w-full max-w-md"
+        />
+        <label
+          htmlFor="importFile"
+          className="text-md bg-green-500 text-white px-3 py-1 rounded-md text-bold cursor-pointer"
+        >
+          Import
+        </label>
+        <input
+          type="file"
+          id="importFile"
+          accept=".json"
+          className="hidden"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              handleImport(e.target.files[0]);
+            }
+          }}
         />
       </div>
       <table className="w-full bg-white border border-gray-200 rounded-md">
@@ -111,8 +162,7 @@ const MyBots: React.FC = () => {
                   className="bg-slate-200 rounded-2xl p-2 mr-1"
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent navigation when editing
-                    navigate(`/bot?chatId=${bot.id}`)
-
+                    navigate(`/bot?chatId=${bot.id}`);
                   }}
                 >
                   <Icons.edit className="size-5" strokeWidth="1" />
@@ -142,7 +192,6 @@ const MyBots: React.FC = () => {
 
       {/* Delete Confirmation Modal */}
       <Modal open={isDeleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
-        {/* <Dialog.Title className="text-xl font-bold mb-4">Confirm</Dialog.Title> */}
         <p className="mb-4">Do you want to remove this chatbot?</p>
         <div className="flex justify-end space-x-4">
           <button

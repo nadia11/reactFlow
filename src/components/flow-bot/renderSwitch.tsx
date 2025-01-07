@@ -7,9 +7,12 @@ import CardForm from '../form/card-form';
 import Modal from '../ui/modal'; // Your reusable modal component
 
 export const RenderSwitch = () => {
-  const { state } = useNodeStore();
+  const { state, dispatch } = useNodeStore();
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    dispatch({ type: 'SET_SELECTED_NODE', payload: null }); // Clear the selected node
+  };
   // Automatically open the modal when a node is selected
   useEffect(() => {
     if (state.selectedNode) {
@@ -22,11 +25,11 @@ export const RenderSwitch = () => {
   const renderForm = () => {
     switch (state.selectedNode?.type) {
       case NodeType.MESSAGE:
-        return <MessageForm />;
+        return <MessageForm onClose={handleCloseModal}/>;
       case NodeType.BUTTONS:
-        return <ButtonsForm />;
+        return <ButtonsForm onClose={handleCloseModal}/>;
       case NodeType.CARD:
-        return <CardForm />;
+        return <CardForm onClose={handleCloseModal}/>;
       default:
         return <p className="text-gray-500">No node selected</p>;
     }
@@ -35,7 +38,7 @@ export const RenderSwitch = () => {
   return (
     <div>
       {/* Modal Component */}
-      <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
         {renderForm()}
       </Modal>
     </div>

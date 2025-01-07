@@ -25,6 +25,47 @@ export const FlowBotHeader = () => {
     dispatch({ type: 'SET_BUBBLE_OPEN', payload: true });
   };
 
+  const downloadFlow = () => {
+    if (!state.reactFlowInstance) {
+      toast.error('Flow instance not initialized');
+      return;
+    }
+  
+    const nodes = state.reactFlowInstance.getNodes();
+    const edges = state.reactFlowInstance.getEdges();
+  
+    // Format the JSON payload as required
+    const data = {
+      chatBotName: chatBotName || 'flow', // Use provided name or default
+      nodes: nodes.map((node) => ({
+        id: node.id,
+        type: node.type || 'default',
+        data: node.data,
+        position: {
+          x: node.position.x,
+          y: node.position.y,
+        },
+      })),
+      edges: edges.map((edge) => ({
+        id: edge.id,
+        source: edge.source,
+        target: edge.target,
+        type: edge.type || 'default',
+      })),
+    };
+  
+    const json = JSON.stringify(data, null, 2); // Prettify JSON for download
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${chatBotName || 'flow'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  
+
   const saveFlow = async () => {
     if (!state.reactFlowInstance) {
       console.warn('ReactFlow instance not initialized');
@@ -147,7 +188,7 @@ export const FlowBotHeader = () => {
             </button>
           </div>
         </Modal>
-        <Icons.download stroke="#0e9f6e" />
+        <button onClick={downloadFlow}><Icons.download stroke="#0e9f6e" /></button>
       </div>
     </div>
   );

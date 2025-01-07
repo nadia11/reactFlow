@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import api from '@/configs/api';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 interface LoginFormValues {
   email: string;
@@ -20,7 +21,7 @@ const Login: React.FC = () => {
       sessionStorage.setItem('token', response.data.token);
       sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
-      alert('Login successful!');
+      toast.success('Login successful!');
       navigate("/");
     } catch (error) {
       console.error('Login failed:', error);

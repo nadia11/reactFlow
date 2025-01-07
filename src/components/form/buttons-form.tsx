@@ -16,7 +16,7 @@ import { Input } from '../ui/input';
 import TextEditor from '../ui/textEditor';
 import  { useEffect } from 'react';
 
-const ButtonsForm = () => {
+const ButtonsForm = ({ onClose }: { onClose: () => void }) => {
   const { updateNodeData } = useNodeDataChange();
   
   // Schema
@@ -81,6 +81,7 @@ const ButtonsForm = () => {
       },
     });
     dispatch({ type: 'SET_DRAWER_OPEN', payload: false });
+    onClose();
   };
 
   return (

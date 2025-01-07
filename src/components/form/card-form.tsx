@@ -19,7 +19,7 @@ import { Textarea } from '../ui/textarea';
 import ImageUpload from './image-upload';
 import { Icons } from '../../assets/Icons';
 
-const CardForm = () => {
+const CardForm = ({ onClose }: { onClose: () => void }) => {
   const { updateNodeData } = useNodeDataChange();
   enum buttonType {
     ACTION = 'action',
@@ -79,6 +79,7 @@ const CardForm = () => {
       },
     });
     dispatch({ type: 'SET_DRAWER_OPEN', payload: false });
+   onClose();
   };
 
   return (

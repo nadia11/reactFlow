@@ -4,7 +4,6 @@ import { useNodeStore } from '@/store/node-data';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EditorState, ContentState } from 'draft-js';
 import {
   Form,
   FormControl,
@@ -17,7 +16,7 @@ import { Button } from '../ui/button';
 import TextEditor from '../ui/textEditor';
 import { MessageType } from '@/types';
 
-const MessageForm = () => {
+const MessageForm = ({ onClose }: { onClose: () => void }) => {
   const { updateNodeData } = useNodeDataChange();
 
   // Updated schema to handle consistent types
@@ -159,6 +158,7 @@ const MessageForm = () => {
       },
     });
     dispatch({ type: 'SET_DRAWER_OPEN', payload: false });
+    onClose();
   };
 
   return (

@@ -7,7 +7,7 @@ import { LogOut, Settings, Copy, Info, Bell, Smartphone, HelpCircle, Mail } from
 interface HeaderProps {
     onMenuClick: () => void;
   }
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user = JSON.parse(sessionStorage.getItem('user'))||null;
   const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     const menuItems = [
       { label: 'Default Action', route: '/defaultActions' },
@@ -76,7 +76,7 @@ interface HeaderProps {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-xl font-bold text-gray-800">aron imaginations</h2>
-            <p className="text-sm text-gray-500">{user.email}</p>
+            <p className="text-sm text-gray-500">{user?user.email :"Visitor"}</p>
             <p className="text-sm text-gray-500">Client ID: 363221</p>
           </div>
           <button
