@@ -1254,6 +1254,7 @@ chalk@^4.0.0:
     "@radix-ui/react-slot" "^1.1.0"
     "@radix-ui/react-switch" "^1.1.2"
     axios "^1.7.9"
+    babel-polyfill "^6.26.0"
     check-flow "file:"
     class-variance-authority "^0.7.0"
     clsx "^2.1.1"
