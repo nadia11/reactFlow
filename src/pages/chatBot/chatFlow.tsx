@@ -6,6 +6,8 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
   MiniMap,
+  applyEdgeChanges,
+  applyNodeChanges,
 } from "reactflow";
 import { cn } from "../../lib/utils";
 import { useFlow } from "../../hooks/useFlow";
@@ -21,6 +23,8 @@ import { useGlobalStore } from "../../store";
 import FlowChat from "../../components/flow-bot/flow-chat";
 const proOptions = { hideAttribution: true };
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "@/components/ui/modal";
 const defaultEdgeOptions = {
   type: "smoothstep",
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -29,13 +33,9 @@ const defaultEdgeOptions = {
 export function ChatFlow({
   initialNodesProp = [],
   initialEdgesProp = [],
-  onNodesChange: parentOnNodesChange,
-  onEdgesChange: parentOnEdgesChange,
 }: {
   initialNodesProp?: any[];
   initialEdgesProp?: any[];
-  onNodesChange?: (nodes: any[]) => void;
-  onEdgesChange?: (edges: any[]) => void;
 }) {
   const {
     nodeTypes,
@@ -48,35 +48,27 @@ export function ChatFlow({
     initialEdges,
     initialNodes,
   } = useFlow();
-
+  const navigate = useNavigate();
   const [nodes, setNodes, onNodesChange] = useNodesState(
     initialNodesProp.length ? initialNodesProp : initialNodes
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     initialEdgesProp.length ? initialEdgesProp : initialEdges
   );
+  const [nodeOrEdgeChanged, setNodeOrEdgeChanged] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { state, dispatch } = useNodeStore();
 
   const handleToggleDrawer = () => {
     dispatch({ type: "SET_SIDEBAR_OPEN", payload: true });
   };
-  const handleNodesChange = (changes: any[]) => {
-    const updatedNodes = onNodesChange(changes); // Update nodes state
-    if (!isInitialLoad && parentOnNodesChange)
-      parentOnNodesChange(updatedNodes); // Send changes to the parent
-  };
 
-  const handleEdgesChange = (changes: any[]) => {
-    const updatedEdges = onEdgesChange(changes); // Update edges state
-    if (!isInitialLoad && parentOnEdgesChange)
-      parentOnEdgesChange(updatedEdges); // Send changes to the parent
-  };
   useEffect(() => {
-    if (isInitialLoad && nodes.length && edges.length) {
-      setIsInitialLoad(false);
+    if (initialEdgesProp || initialNodesProp) {
+      setIsInitialLoad(false); // Fresh flow starts here
     }
-  }, [isInitialLoad, nodes, edges]);
+  }, [initialEdgesProp, initialNodesProp]);
   const handleDrawerClose = () => {
     dispatch({ type: "SET_DRAWER_OPEN", payload: false });
   };
@@ -88,7 +80,66 @@ export function ChatFlow({
     setReactFlowInstance(instance); // Ensure this is called if already defined
   };
   const { state: globalState } = useGlobalStore();
+  const handleNodesChange = (changes: any[]) => {
+    const updatedNodes = applyNodeChanges(changes, nodes);
+    setNodes(updatedNodes);
 
+    if (!isInitialLoad) {
+      setNodeOrEdgeChanged(true);
+    }
+  };
+
+  // Handle edge changes
+  const handleEdgesChange = (changes: any[]) => {
+    const updatedEdges = applyEdgeChanges(changes, edges);
+    setEdges(updatedEdges);
+
+    if (!isInitialLoad) {
+      setNodeOrEdgeChanged(true);
+    }
+  };
+
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    if (nodeOrEdgeChanged) {
+      event.preventDefault();
+      event.returnValue = ""; // Necessary for browser confirmation
+    }
+  };
+  const handlePopState = (event: PopStateEvent) => {
+    event.preventDefault();
+    if (nodeOrEdgeChanged) {
+      setIsModalOpen(true);
+    } else {
+      navigate("/myBots");
+    }
+  };
+  useEffect(() => {
+    if (isModalOpen === true) {
+      window.history.forward();
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [nodeOrEdgeChanged]);
+
+  const handleDiscardChanges = () => {
+    setNodes(initialNodesProp);
+    setEdges(initialEdgesProp);
+    setNodeOrEdgeChanged(false);
+    setIsModalOpen(false);
+    navigate(-1);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="h-screen overflow-hidden relative w-full">
       {globalState.bubble_open && (
@@ -153,6 +204,31 @@ export function ChatFlow({
               <MiniMap />
               <Controls />
             </ReactFlow>
+            {isModalOpen && (
+              <Modal open={isModalOpen} onClose={handleCancel}>
+                <div className="p-4">
+                  <h2 className="text-xl font-bold mb-4">Confirm</h2>
+                  <p className="mb-4">
+                    You will lose unsaved changes. Are you sure you want to
+                    continue?
+                  </p>
+                  <div className="flex justify-end gap-3">
+                    <button
+                      onClick={handleCancel}
+                      className="border px-4 py-2 rounded hover:bg-gray-200"
+                    >
+                      Go Back
+                    </button>
+                    <button
+                      onClick={handleDiscardChanges}
+                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                    >
+                      Discard Changes
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
           </div>
 
           <Sidebar />
