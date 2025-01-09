@@ -20,8 +20,15 @@ const TestBot: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchParams] = useSearchParams();
-  const chatId = searchParams.get("chatId"); 
-  
+  const chatId = searchParams.get("chatId");
+  const [nodeOrEdgeChanged, setNodeOrEdgeChanged] = useState(false);
+  const handleNodesChange = (nodes: any[]) => {
+    setNodeOrEdgeChanged(true);
+  };
+
+  const handleEdgesChange = (edges: any[]) => {
+    setNodeOrEdgeChanged(true);
+  };
   useEffect(() => {
     if (!chatId) {
       setError("No chatId provided");
@@ -76,19 +83,12 @@ const TestBot: React.FC = () => {
     }
   };
   const handlePopState = (event: PopStateEvent) => {
-    console.log("nodes"+!_.isEqual(initialNodesData, nodes));
-    console.log( "edges"+!_.isEqual(initialEdgesData, edges) );
-    console.log("Stringified Nodes Comparison:", JSON.stringify(initialNodesData) !== JSON.stringify(nodes));
-console.log("Stringified Edges Comparison:", JSON.stringify(initialEdgesData) !== JSON.stringify(edges));
-
-console.log("Initial Nodes (Stringified):", JSON.stringify(initialNodesData));
-console.log("Current Nodes (Stringified):", JSON.stringify(nodes));
-
-console.log("Initial Edges (Stringified):", JSON.stringify(initialEdgesData));
-console.log("Current Edges (Stringified):", JSON.stringify(edges));
     event.preventDefault();
     event.stopPropagation();
-    setIsModalOpen(true);
+    if (nodeOrEdgeChanged) setIsModalOpen(true);
+    else if (!nodeOrEdgeChanged) {
+      navigate("/myBots");
+    }
   };
   useEffect(() => {
     if (isModalOpen === true) {
@@ -136,6 +136,8 @@ console.log("Current Edges (Stringified):", JSON.stringify(edges));
       <ChatFlow
         initialNodesProp={initialNodesData}
         initialEdgesProp={initialEdgesData}
+        onNodesChange={handleNodesChange}
+        onEdgesChange={handleEdgesChange}
       />
       {isModalOpen && (
         <Modal open={isModalOpen} onClose={handleCancel}>
