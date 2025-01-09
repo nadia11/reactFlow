@@ -13,12 +13,13 @@ export const FlowBotHeader = () => {
   const { state } = useNodeStore();
   const { dispatch } = useGlobalStore();
   const [modalOpen, setModalOpen] = useState(false);
-  const [chatBotName, setChatBotName] = useState('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const chatId = searchParams.get('chatId'); // Extract chatId from the route
-
+  const botName = searchParams.get('botName') || ""; 
+  
+  const [chatBotName, setChatBotName] = useState(botName);
   const generateChatbotId = () => uuidv4();
 
   const onTestBotClick = () => {
@@ -137,8 +138,8 @@ export const FlowBotHeader = () => {
   return (
     <div className="flex justify-between items-center bg-white px-40 py-3 shadow-md">
       <div className="flex items-center">
-        <Icons.arrowLeft />
-        <h1 className="ml-2 text-xl font-semibold text-gray-900">Demo Bot</h1>
+        <Icons.arrowLeft onClick={()=>navigate("/myBots")}/>
+        <h1 className="ml-2 text-xl font-semibold text-gray-900">{chatBotName}</h1>
       </div>
       <div className="flex items-center gap-3">
         <Button

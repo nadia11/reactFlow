@@ -150,7 +150,7 @@ const MyBots: React.FC = () => {
             <tr
               key={bot.id}
               className="border-t cursor-pointer hover:bg-gray-100"
-              onClick={() => navigate(`/bot?chatId=${bot.id}`)} // Navigate to /bot with chatId
+              onClick={() => navigate(`/bot?chatId=${bot.id}&botName=${bot.name}`)} // Navigate to /bot with chatId
             >
               <td className="p-4">{bot.name}</td>
               <td className="p-4">{bot.triggered || 0}</td>
@@ -162,7 +162,7 @@ const MyBots: React.FC = () => {
                   className="bg-slate-200 rounded-2xl p-2 mr-1"
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent navigation when editing
-                    navigate(`/bot?chatId=${bot.id}`);
+                    navigate(`/bot?chatId=${bot.id}&botName=${bot.name}`);
                   }}
                 >
                   <Icons.edit className="size-5" strokeWidth="1" />
