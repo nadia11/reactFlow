@@ -76,7 +76,16 @@ const TestBot: React.FC = () => {
     }
   };
   const handlePopState = (event: PopStateEvent) => {
-    
+    console.log("nodes"+!_.isEqual(initialNodesData, nodes));
+    console.log( "edges"+!_.isEqual(initialEdgesData, edges) );
+    console.log("Stringified Nodes Comparison:", JSON.stringify(initialNodesData) !== JSON.stringify(nodes));
+console.log("Stringified Edges Comparison:", JSON.stringify(initialEdgesData) !== JSON.stringify(edges));
+
+console.log("Initial Nodes (Stringified):", JSON.stringify(initialNodesData));
+console.log("Current Nodes (Stringified):", JSON.stringify(nodes));
+
+console.log("Initial Edges (Stringified):", JSON.stringify(initialEdgesData));
+console.log("Current Edges (Stringified):", JSON.stringify(edges));
     event.preventDefault();
     event.stopPropagation();
     setIsModalOpen(true);
@@ -95,7 +104,7 @@ const TestBot: React.FC = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("popstate", handlePopState);
     };
-  }, []);
+  }, [initialNodesData, initialEdgesData, nodes, edges]);
 
   const handleDiscardChanges = () => {
     dispatch({ type: "SET_SELECTED_NODE", payload: null }); // Clear nodes and edges
