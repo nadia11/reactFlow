@@ -8,7 +8,7 @@ import Modal from '../ui/modal';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
 import api from '@/configs/api';
-
+import { convertBase64ToFile } from '@/helpers';
 export const FlowBotHeader = () => {
   const { state } = useNodeStore();
   const { dispatch } = useGlobalStore();
@@ -20,7 +20,6 @@ export const FlowBotHeader = () => {
   const botName = searchParams.get('botName') || ""; 
   
   const [chatBotName, setChatBotName] = useState(botName);
-  const generateChatbotId = () => uuidv4();
 
   const onTestBotClick = () => {
     dispatch({ type: 'SET_BUBBLE_OPEN', payload: true });
@@ -69,72 +68,131 @@ export const FlowBotHeader = () => {
 
   const saveFlow = async () => {
     if (!state.reactFlowInstance) {
-      console.warn('ReactFlow instance not initialized');
+      console.warn("ReactFlow instance not initialized");
       return;
     }
-
+  
     const nodes = state.reactFlowInstance.getNodes();
     const edges = state.reactFlowInstance.getEdges();
+  
 
+    const uploadFile = async (file: { data: string; name: string }) => {
+      try {
+        const base64Data = file.data.split(",")[1]; // Extract the base64 part after "data:<type>;base64,"
+        const mimeType = file.data.match(/data:(.*);base64/)?.[1] || "application/octet-stream"; // Extract MIME type
+    
+        // Decode base64 to binary using Uint8Array
+        const binaryData = atob(base64Data); // Decode base64 to binary string
+        const arrayBuffer = new Uint8Array(binaryData.length);
+    
+        for (let i = 0; i < binaryData.length; i++) {
+          arrayBuffer[i] = binaryData.charCodeAt(i);
+        }
+    
+        // Convert Uint8Array to a File
+        const fileToUpload = new File([arrayBuffer], file.name, { type: mimeType });
+    
+        const formData = new FormData();
+        formData.append("file", fileToUpload);
+    
+        const response = await api.post("/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+    
+        return response.data.fileUrl; // Return the uploaded file URL
+      } catch (error) {
+        console.error("File upload failed:", error);
+        throw new Error("File upload failed");
+      }
+    };
+    
+    const updatedNodes = await Promise.all(
+      nodes.map(async (node) => {
+        // Check if the node has files in `message_data`
+        if (node.data?.message_data?.messages) {
+          const updatedMessages = await Promise.all(
+            node.data.message_data.messages.map(async (message: any) => {
+              if (
+                message.type === "image" ||
+                message.type === "video" ||
+                message.type === "audio" ||
+                message.type === "document"
+              ) {
+                if (typeof message.message === "object" && message.message.url?.startsWith("data:")) {
+                  const uploadedUrl = await uploadFile({
+                    data: message.message.url,
+                    name: message.message.name,
+                  });
+                  return {
+                    ...message,
+                    message: {
+                      ...message.message,
+                      url: uploadedUrl, // Replace base64 with the uploaded file URL
+                    },
+                  };
+                }
+              }
+              return message;
+            })
+          );
+  
+          // Return the updated node
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              message_data: {
+                ...node.data.message_data,
+                messages: updatedMessages,
+              },
+            },
+          };
+        }
+        return node; // If no files, return the original node
+      })
+    );
+  
     const payload: {
       chatBotName: string;
-      chatbotId?: string; // Optional chatbotId
-      nodes: {
-        id: string;
-        type: string | undefined;
-        data: any;
-        position: { x: number; y: number };
-      }[];
-      edges: {
-        id: string;
-        source: string;
-        target: string;
-        type: string;
-      }[];
-    }  = {
+      chatbotId?: string;
+      nodes: typeof updatedNodes;
+      edges: typeof edges;
+    } = {
       chatBotName,
-      nodes: nodes.map((node) => ({
-        id: node.id,
-        type: node.type,
-        data: node.data,
-        position: node.position,
-      })),
+      nodes: updatedNodes,
       edges: edges.map((edge) => ({
         id: edge.id,
         source: edge.source,
         target: edge.target,
-        type: edge.type || 'default',
+        type: edge.type || "default",
       })),
     };
-
+  
+    // Call the API for save or update
     if (chatId) {
       // Update operation
       try {
         const response = await api.put(`/nodes/chatflow/${chatId}`, payload);
-        toast.success('Chatbot updated successfully');
-        console.log('Update Response:', response.data);
+        toast.success("Chatbot updated successfully");
+        console.log("Update Response:", response.data);
       } catch (error) {
-        console.error('Update Error:', error);
-        toast.error('Failed to update chatbot');
+        console.error("Update Error:", error);
+        toast.error("Failed to update chatbot");
       }
     } else {
       // Create operation
-      const chatbotId = generateChatbotId();
-      payload.chatBotName = chatBotName;
-      payload.chatbotId = chatbotId;
-
       try {
-        const response = await api.post('/nodes/chatflow', payload);
-        toast.success('Chatbot created successfully');
-        console.log('Create Response:', response.data);
+        const response = await api.post("/nodes/chatflow", payload);
+        toast.success("Chatbot created successfully");
+        console.log("Create Response:", response.data);
         setModalOpen(false);
       } catch (error) {
-        console.error('Create Error:', error);
-        toast.error('Failed to create chatbot');
+        console.error("Create Error:", error);
+        toast.error("Failed to create chatbot");
       }
     }
   };
-
+  
   return (
     <div className="flex justify-between items-center bg-white px-40 py-3 shadow-md">
       <div className="flex items-center">
