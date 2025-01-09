@@ -38,8 +38,8 @@ export function ChatFlow({ initialNodesProp = [], initialEdgesProp = [] }: { ini
     initialNodes,
   } = useFlow();
 
-  const [nodes] = useNodesState(initialNodesProp.length ? initialNodesProp : initialNodes);
-  const [edges] = useEdgesState(initialEdgesProp.length ? initialEdgesProp : initialEdges);
+  const [nodes, setNodes,onNodesChange] = useNodesState(initialNodesProp.length ? initialNodesProp : initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdgesProp.length ? initialEdgesProp : initialEdges);
 
   const { state, dispatch } = useNodeStore();
 
@@ -94,9 +94,11 @@ export function ChatFlow({ initialNodesProp = [], initialEdgesProp = [] }: { ini
                 onDragOver,
               }}
               nodeTypes={nodeTypes as any}
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
               onInit={handleInit}
-              defaultNodes={initialNodes}
-              defaultEdges={initialEdges}
               nodesConnectable={true}
               connectionLineComponent={CustomConnectionLine}
               maxZoom={2}
