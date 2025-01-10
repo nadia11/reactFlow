@@ -164,6 +164,7 @@ export const FlowBotHeader = () => {
         id: edge.id,
         source: edge.source,
         target: edge.target,
+        sourceHandle: edge.sourceHandle || null,
         type: edge.type || "default",
       })),
     };

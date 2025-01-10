@@ -59,7 +59,19 @@ export function ChatFlow({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { state, dispatch } = useNodeStore();
-
+  const onConnectCustom = (params) => {
+    setEdges((prevEdges) => [
+      ...prevEdges,
+      {
+        id: `e${params.source}-${params.target}`,
+        source: params.source,
+        sourceHandle: params.sourceHandle, // Include sourceHandle for branching
+        target: params.target,
+        type: "smoothstep",
+      },
+    ]);
+  };
+  
   const handleToggleDrawer = () => {
     dispatch({ type: "SET_SIDEBAR_OPEN", payload: true });
   };
@@ -175,6 +187,7 @@ export function ChatFlow({
                 onDragOver,
               }}
               nodeTypes={nodeTypes as any}
+              onConnect={onConnectCustom}
               nodes={nodes}
               edges={edges}
               onNodesChange={handleNodesChange}

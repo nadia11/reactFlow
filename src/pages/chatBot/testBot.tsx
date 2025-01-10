@@ -41,6 +41,7 @@ const TestBot: React.FC = () => {
           id: `e${edge.sourceId}-${edge.targetId}`,
           source: nodes.find((node: any) => node.id === edge.sourceId)?.nodeId,
           target: nodes.find((node: any) => node.id === edge.targetId)?.nodeId,
+          sourceHandle: edge.sourceHandle || null,
           animated: edge.animated || false,
         }));
 

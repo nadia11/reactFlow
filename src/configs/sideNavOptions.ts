@@ -14,7 +14,7 @@ export const sidebarNavigation: ISidebarNavigation[] = [
     className: "grid-rows-3 gap-2",
     children: [
       {
-        label:"card",
+        label:"message",
         title: 'Send a message',
         icon: 'message',
         description: 'With no response required from visitor',
