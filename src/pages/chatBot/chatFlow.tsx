@@ -182,6 +182,8 @@ export function ChatFlow({
               onInit={handleInit}
               nodesConnectable={true}
               connectionLineComponent={CustomConnectionLine}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
               maxZoom={2}
               minZoom={0.3}
               onPaneClick={handleDrawerClose}
